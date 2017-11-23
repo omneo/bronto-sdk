@@ -1,6 +1,6 @@
 <?php
 
-namespace Arkade\Responsys\Exceptions;
+namespace Arkade\Bronto\Exceptions;
 
 use Exception;
 

@@ -23,7 +23,7 @@ class OrderService extends AbstractRestModule
      * @param $id
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function add(Bronto\Order $order)
+    public function add(Bronto\Entities\Order $order)
     {
         return $this->client->post('orders',['customerOrderId' => $id]);
     }

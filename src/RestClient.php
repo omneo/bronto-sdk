@@ -53,7 +53,7 @@ class RestClient
         try {
             $response = $this->client->request(
                 $method,
-                $this->auth->getEndpoint() . $endpoint,
+                $this->auth->getEndpoint() . '/' . $endpoint,
                 array_merge($headers, $params)
             );
         } catch (GuzzleHttp\Exception\BadResponseException $e) {

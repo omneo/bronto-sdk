@@ -475,7 +475,7 @@ class Order
      * @param OrderState $states
      * @return Order
      */
-    public function setStates(Bronto\OrderState $states)
+    public function setStates(OrderState $states)
     {
         $this->states = $states;
         return $this;

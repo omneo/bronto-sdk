@@ -3,6 +3,7 @@
 namespace Arkade\Bronto;
 
 use Illuminate\Support\ServiceProvider;
+use Arkade\Bronto;
 
 class LaravelServiceProvider extends ServiceProvider
 {
@@ -17,6 +18,7 @@ class LaravelServiceProvider extends ServiceProvider
         $this->app->singleton(Bronto\RestAuthentication::class, function(){
             return (new Bronto\RestAuthentication)
                 ->setAuthUrl(config('services.bronto.authUrl'))
+                ->setEndpoint(config('services.bronto.endpoint'))
                 ->setClientId(config('services.bronto.clientId'))
                 ->setClientSecret(config('services.bronto.clientSecret'));
         });
