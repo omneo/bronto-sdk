@@ -4,6 +4,7 @@ namespace Arkade\Bronto;
 
 use Psr\Http;
 use GuzzleHttp;
+use GuzzleHttp\Middleware;
 use Arkade\Bronto;
 
 class RestClient
