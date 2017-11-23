@@ -25,6 +25,6 @@ class OrderService extends AbstractRestModule
      */
     public function add(Bronto\Entities\Order $order)
     {
-        return $this->client->post('orders',['customerOrderId' => $id]);
+        return $this->client->post('orders', ['json' => $order, 'debug' => true]);
     }
 }

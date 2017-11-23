@@ -2,7 +2,7 @@
 
 namespace Arkade\Bronto\Entities;
 
-class LineItem
+class LineItem extends AbstractEntity
 {
     /**
      * @var string

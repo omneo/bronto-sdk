@@ -4,7 +4,7 @@ namespace Arkade\Bronto\Entities;
 
 use Carbon\Carbon;
 
-class Order
+class Order extends AbstractEntity
 {
     /**
      * @var float

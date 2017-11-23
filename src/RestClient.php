@@ -50,6 +50,12 @@ class RestClient
             ],
         ];
 
+        $clientHandler = $this->client->getConfig('handler');
+        $tapMiddleware = Middleware::tap(function ($request) {
+            echo 'tap: ' . $request->getBody();
+        });
+        $params['handler'] = $tapMiddleware($clientHandler);
+
         try {
             $response = $this->client->request(
                 $method,
@@ -57,6 +63,9 @@ class RestClient
                 array_merge($headers, $params)
             );
         } catch (GuzzleHttp\Exception\BadResponseException $e) {
+            //            var_dump($e->getResponse()->getBody());
+//            var_dump($e->getResponse()->getStatusCode());
+//            var_dump($e->getResponse()->getHeader('X-Reason'));
             throw new Exceptions\UnexpectedException((string) $e->getResponse()->getBody(), $e->getResponse()->getStatusCode());
         }
 
