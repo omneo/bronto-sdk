@@ -13,7 +13,6 @@ class LaravelServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
         // Setup the auth.
         $this->app->singleton(Bronto\RestAuthentication::class, function(){
             return (new Bronto\RestAuthentication)

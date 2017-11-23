@@ -111,4 +111,14 @@ class RestClient
         return $this->request('DELETE', $endpoint, $params);
     }
 
+    /**
+     * Order service module.
+     *
+     * @return Modules\OrderService
+     */
+    public function orderService()
+    {
+        return new Modules\OrderService($this);
+    }
+
 }
