@@ -2,8 +2,9 @@
 
 namespace Arkade\Bronto\Modules;
 
-use Arkade\Bronto\Entities;
+use Arkade\Bronto\Entities\Order;
 use Arkade\Bronto\Parsers;
+use Illuminate\Support\Collection;
 
 class OrderService extends AbstractRestModule
 {
@@ -12,12 +13,12 @@ class OrderService extends AbstractRestModule
      * Uses Bronto order ID
      *
      * @param $id
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return Order
      */
     public function find($id)
     {
         return (new Parsers\OrderParser)->parse(
-            (new Parsers\PayloadParser)->parse($this->client->get('orders/'.$id,['debug' => true]))
+            $this->client->get('orders/'.$id,['debug' => true])
         );
     }
 
@@ -26,22 +27,32 @@ class OrderService extends AbstractRestModule
      * Uses customer order ID
      *
      * @param $id
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return Collection
      */
     public function findById($id)
     {
-        return $this->client->get('orders?customerOrderId='.$id,['debug' => true]);
+        $data = $this->client->get('orders?customerOrderId='.$id,['debug' => true]);
+
+        $collection = new Collection;
+
+        foreach($data as $item){
+            $collection->push(
+                (new Parsers\OrderParser)->parse($item)
+            );
+        }
+
+        return $collection;
     }
 
     /**
      * Order add.
      *
-     * @param Bronto\Entities\Order $order
+     * @param Order $order
      * @param boolean $createContact
      * @param boolean $triggerEvents
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function add(Bronto\Entities\Order $order, $createContact = false, $triggerEvents = false)
+    public function add(Order $order, $createContact = false, $triggerEvents = false)
     {
         $query = 'createContact='.$createContact;
         $query .= 'triggerEvents='.$createContact;
@@ -52,12 +63,12 @@ class OrderService extends AbstractRestModule
      * Order update.
      * Uses Bronto order ID
      *
-     * @param Bronto\Entities\Order $order
+     * @param Order $order
      * @param boolean $createContact
      * @param boolean $triggerEvents
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function update(Bronto\Entities\Order $order, $createContact = false, $triggerEvents = false)
+    public function update(Order $order, $createContact = false, $triggerEvents = false)
     {
         $query = 'createContact='.$createContact;
         $query .= 'triggerEvents='.$createContact;
@@ -68,12 +79,12 @@ class OrderService extends AbstractRestModule
      * Order update.
      * Uses customer order ID
      *
-     * @param Bronto\Entities\Order $order
+     * @param Order $order
      * @param boolean $createContact
      * @param boolean $triggerEvents
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function updateById(Bronto\Entities\Order $order, $createContact = false, $triggerEvents = false)
+    public function updateById(Order $order, $createContact = false, $triggerEvents = false)
     {
         $query = 'createContact='.$createContact;
         $query .= 'triggerEvents='.$createContact;

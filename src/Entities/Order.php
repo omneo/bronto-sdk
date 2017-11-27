@@ -3,6 +3,7 @@
 namespace Arkade\Bronto\Entities;
 
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class Order extends AbstractEntity
 {
@@ -180,7 +181,7 @@ class Order extends AbstractEntity
      */
     public function getLineItems()
     {
-        return $this->lineItems;
+        return $this->lineItems ?: $this->lineItems = new Collection;
     }
 
     /**

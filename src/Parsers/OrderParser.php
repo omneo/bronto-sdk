@@ -4,59 +4,48 @@ namespace Arkade\Bronto\Parsers;
 
 use Carbon\Carbon;
 use Arkade\Bronto\Entities;
-use Illuminate\Support\Collection;
 
 class OrderParser
 {
     /**
-     * Parse the given SimpleXmlElement to a Order entity.
+     * Parse the given array to a Order entity.
      *
-     * @param  $payload
-     * @return Entities\Order
+     * @param  array $payload
+     * @return Order
      */
     public function parse($payload)
     {
-        /*
         $order = (new Entities\Order)
-            ->setDateTime(Carbon::parse((string) $payload->OrderDateTime))
-            ->setTotal((int) (string) ((float) $payload->TotalDue * 100))
-            ->setTotalTax((int) (string) ((float) $payload->TotalTax * 100))
-            ->setTotalDiscount((int) (string) ((float) $payload->TotalDiscount * 100))
-            ->setIdentifiers(new Collection([
-                'ap21_id'     => (integer) $payload->Id,
-                'ap21_number' => (integer) $payload->OrderNumber
-            ]))
-            ->setCustomer(
-                (new Entities\Person)->setIdentifiers(collect([
-                    'ap21_id' => (integer) $payload->PersonId
-                ]))
-            )
-            ->setContacts(
-                (new ContactParser)->parseCollection($payload->Contacts)
-            )
-            ->setAddresses(
-                (new AddressParser)->parseCollection($payload->Addresses)
-            )
-            ->setFreightOption(
-                (new Entities\FreightOption)
-                    ->setId((integer) $payload->SelectedFreightOption->Id)
-                    ->setName((integer) $payload->SelectedFreightOption->Name)
-                    ->setValue((integer) (string) ((float) $payload->SelectedFreightOption->Value * 100))
+            ->setCartId($payload->cartId)
+            ->setCreatedDate(Carbon::parse((string) $payload->createdDate))
+            ->setCurrency($payload->currency)
+            ->setCustomerOrderId($payload->customerOrderId)
+            ->setDiscountAmount($payload->discountAmount)
+            ->setEmailAddress($payload->emailAddress)
+            ->setGrandTotal($payload->grandTotal)
+            ->setOrderDate(Carbon::parse((string) $payload->orderDate))
+            ->setOrderId($payload->orderId)
+            ->setOriginIp($payload->originIp)
+            ->setOriginUserAgent($payload->originUserAgent)
+            ->setShippingAmount($payload->shippingAmount)
+            ->setShippingDate(Carbon::parse((string) $payload->shippingDate))
+            ->setShippingDetails($payload->shippingDetails)
+            ->setShippingTrackingUrl($payload->shippingTrackingUrl)
+            ->setSubtotal($payload->subtotal)
+            ->setTaxAmount($payload->taxAmount)
+            ->setTrackingCookieName($payload->trackingCookieName)
+            ->setTrackingCookieValue($payload->trackingCookieValue)
+            ->setUpdatedDate(Carbon::parse((string) $payload->updatedDate))
+            ->setStates(
+                (new OrderStateParser)->parse($payload->states)
             );
 
-        foreach ($payload->Payments->PaymentDetail as $payment) {
-            $order->getPayments()->push(
-                (new PaymentParser)->parse($payment)
-            );
-        }
-
-        foreach ($payload->OrderDetails->OrderDetail as $lineItem) {
+        foreach($payload->lineItems as $item){
             $order->getLineItems()->push(
-                (new LineItemParser)->parse($lineItem)
+                (new LineItemParser)->parse($item)
             );
         }
 
         return $order;
-        */
     }
 }
