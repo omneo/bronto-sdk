@@ -428,7 +428,7 @@ class Order extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return Carbon
      */
     public function getOrderDate()
     {
@@ -436,10 +436,10 @@ class Order extends AbstractEntity
     }
 
     /**
-     * @param string $orderDate
+     * @param Carbon $orderDate
      * @return Order
      */
-    public function setOrderDate($orderDate)
+    public function setOrderDate(Carbon $orderDate)
     {
         $this->orderDate = $orderDate;
         return $this;
@@ -533,6 +533,22 @@ class Order extends AbstractEntity
     {
         $this->updatedDate = $updatedDate;
         return $this;
+    }
+
+    /**
+     * @return Array
+     */
+    public function jsonSerialize()
+    {
+        $result = get_object_vars($this);
+        if(!is_null($result['orderDate'])) $result['orderDate'] = $result['orderDate']->toDateString();
+        if(!is_null($result['shippingDate'])) $result['shippingDate'] = $result['shippingDate']->toDateString();
+        unset($result['orderId']);
+        unset($result['createdDate']);
+        unset($result['updatedDate']);
+        if(is_null($result['trackingCookieName'])) unset($result['trackingCookieName']);
+        if(is_null($result['trackingCookieValue'])) unset($result['trackingCookieValue']);
+        return $result;
     }
 
 }

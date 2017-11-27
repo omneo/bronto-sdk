@@ -63,7 +63,7 @@ class RestClient
                 $this->auth->getEndpoint() . '/' . $endpoint,
                 array_merge($headers, $params)
             );
-        } catch (GuzzleHttp\Exception\BadResponseException $e) {
+        } catch (GuzzleHttp\Exception\RequestException $e) {
             //            var_dump($e->getResponse()->getBody());
 //            var_dump($e->getResponse()->getStatusCode());
 //            var_dump($e->getResponse()->getHeader('X-Reason'));
