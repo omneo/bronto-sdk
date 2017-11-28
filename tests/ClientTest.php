@@ -49,7 +49,7 @@ class ClientTest extends TestCase
         $client = new RestClient($auth, $stack);
 
         // Let's test!
-        $client->request('GET', '/some-endpoint',
+        $client->request('GET', 'some-endpoint',
             ['query' => ['foo' => 'bar']]);
 
         // Check the correct outgoing call was made

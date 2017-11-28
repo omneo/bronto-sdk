@@ -79,8 +79,7 @@ class RestClient
         if ($e instanceof GuzzleHttp\Exception\BadResponseException) {
             $message = (string) $e->getResponse()->getBody();
             if(count($e->getResponse()->getHeader('X-Reason'))){
-                dump($e->getResponse()->getHeader('X-Reason'));
-                $message = (string) $e->getResponse()->getHeader('X-Reason');
+                $message = (string) $e->getResponse()->getHeader('X-Reason')[0];
             }
             return new Exceptions\BrontoException($message, $e->getResponse()->getStatusCode());
         }

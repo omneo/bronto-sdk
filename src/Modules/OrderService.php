@@ -60,13 +60,15 @@ class OrderService extends AbstractRestModule
         $query = 'createContact='.$createContact;
         $query .= 'triggerEvents='.$createContact;
 
-        return $this->client->post(
-            'orders?'.$query,
-            [
-                'headers' => ['Content-Type' => 'application/json'],
-                'body' => (new OrderSerializer)->serialize($order),
-                'debug' => true
-            ]
+        return (new OrderParser)->parse(
+            $this->client->post(
+                'orders?'.$query,
+                [
+                    'headers' => ['Content-Type' => 'application/json'],
+                    'body' => (new OrderSerializer)->serialize($order),
+                    'debug' => true
+                ]
+            )
         );
     }
 
@@ -84,13 +86,15 @@ class OrderService extends AbstractRestModule
         $query = 'createContact='.$createContact;
         $query .= 'triggerEvents='.$createContact;
 
-        return $this->client->post(
-            'orders/'.$order->getOrderId().'?'.$query,
-            [
-                'headers' => ['Content-Type' => 'application/json'],
-                'body' => (new OrderSerializer)->serialize($order),
-                'debug' => true
-            ]
+        return (new OrderParser)->parse(
+            $this->client->post(
+                'orders/'.$order->getOrderId().'?'.$query,
+                [
+                    'headers' => ['Content-Type' => 'application/json'],
+                    'body' => (new OrderSerializer)->serialize($order),
+                    'debug' => true
+                ]
+            )
         );
     }
 
@@ -108,13 +112,15 @@ class OrderService extends AbstractRestModule
         $query = 'createContact='.$createContact;
         $query .= 'triggerEvents='.$createContact;
 
-        return $this->client->post(
-            'orders/customerOrderId/'.$order->getCustomerOrderId().'?'.$query,
-            [
-                'headers' => ['Content-Type' => 'application/json'],
-                'body' => (new OrderSerializer)->serialize($order),
-                'debug' => true
-            ]
+        return (new OrderParser)->parse(
+            $this->client->post(
+                'orders/customerOrderId/'.$order->getCustomerOrderId().'?'.$query,
+                [
+                    'headers' => ['Content-Type' => 'application/json'],
+                    'body' => (new OrderSerializer)->serialize($order),
+                    'debug' => true
+                ]
+            )
         );
     }
 

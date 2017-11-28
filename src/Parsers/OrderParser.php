@@ -23,12 +23,11 @@ class OrderParser
             ->setDiscountAmount($payload->discountAmount)
             ->setEmailAddress($payload->emailAddress)
             ->setGrandTotal($payload->grandTotal)
-            ->setOrderDate(Carbon::parse((string) $payload->orderDate))
             ->setOrderId($payload->orderId)
             ->setOriginIp($payload->originIp)
             ->setOriginUserAgent($payload->originUserAgent)
             ->setShippingAmount($payload->shippingAmount)
-            ->setShippingDate(Carbon::parse((string) $payload->shippingDate))
+            ->setShippingDate(null)
             ->setShippingDetails($payload->shippingDetails)
             ->setShippingTrackingUrl($payload->shippingTrackingUrl)
             ->setSubtotal($payload->subtotal)
@@ -39,6 +38,14 @@ class OrderParser
             ->setStates(
                 (new OrderStateParser)->parse($payload->states)
             );
+
+        if(!is_null($payload->shippingDate)){
+            $order->setShippingDate(Carbon::parse((string) $payload->shippingDate));
+        }
+
+        if(!is_null($payload->orderDate)){
+            $order->setOrderDate(Carbon::parse((string) $payload->orderDate));
+        }
 
         foreach($payload->lineItems as $item){
             $order->getLineItems()->push(
