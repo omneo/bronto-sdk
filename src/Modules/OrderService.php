@@ -3,7 +3,8 @@
 namespace Arkade\Bronto\Modules;
 
 use Arkade\Bronto\Entities\Order;
-use Arkade\Bronto\Parsers;
+use Arkade\Bronto\Parsers\OrderParser;
+use Arkade\Bronto\Serializers\OrderSerializer;
 use Illuminate\Support\Collection;
 
 class OrderService extends AbstractRestModule
@@ -17,7 +18,7 @@ class OrderService extends AbstractRestModule
      */
     public function find($id)
     {
-        return (new Parsers\OrderParser)->parse(
+        return (new OrderParser)->parse(
             $this->client->get('orders/'.$id,['debug' => true])
         );
     }
@@ -35,9 +36,11 @@ class OrderService extends AbstractRestModule
 
         $collection = new Collection;
 
+        if(!count($data)) return $collection;
+
         foreach($data as $item){
             $collection->push(
-                (new Parsers\OrderParser)->parse($item)
+                (new OrderParser)->parse($item)
             );
         }
 
@@ -56,7 +59,15 @@ class OrderService extends AbstractRestModule
     {
         $query = 'createContact='.$createContact;
         $query .= 'triggerEvents='.$createContact;
-        return $this->client->post('orders?'.$query, ['json' => $order, 'debug' => true]);
+
+        return $this->client->post(
+            'orders?'.$query,
+            [
+                'headers' => ['Content-Type' => 'application/json'],
+                'body' => (new OrderSerializer)->serialize($order),
+                'debug' => true
+            ]
+        );
     }
 
     /**
@@ -72,7 +83,15 @@ class OrderService extends AbstractRestModule
     {
         $query = 'createContact='.$createContact;
         $query .= 'triggerEvents='.$createContact;
-        return $this->client->post('orders/'.$order->getOrderId().'?'.$query, ['json' => $order, 'debug' => true]);
+
+        return $this->client->post(
+            'orders/'.$order->getOrderId().'?'.$query,
+            [
+                'headers' => ['Content-Type' => 'application/json'],
+                'body' => (new OrderSerializer)->serialize($order),
+                'debug' => true
+            ]
+        );
     }
 
     /**
@@ -88,7 +107,15 @@ class OrderService extends AbstractRestModule
     {
         $query = 'createContact='.$createContact;
         $query .= 'triggerEvents='.$createContact;
-        return $this->client->post('orders/customerOrderId/'.$order->getCustomerOrderId().'?'.$query, ['json' => $order, 'debug' => true]);
+
+        return $this->client->post(
+            'orders/customerOrderId/'.$order->getCustomerOrderId().'?'.$query,
+            [
+                'headers' => ['Content-Type' => 'application/json'],
+                'body' => (new OrderSerializer)->serialize($order),
+                'debug' => true
+            ]
+        );
     }
 
     /**

@@ -41,36 +41,51 @@ class RestClient
      * @param $endpoint
      * @param array $params
      * @return Http\Message\ResponseInterface
-     * @throws Exceptions\UnexpectedException
+     * @throws Exceptions\BrontoException
      */
     public function request($method, $endpoint, array $params = [])
     {
-        $headers = [
-            'headers' => [
-                'Authorization' => 'Bearer ' . $this->auth->getToken(),
-            ],
-        ];
-
         $clientHandler = $this->client->getConfig('handler');
-        $tapMiddleware = Middleware::tap(function ($request) {
-            echo 'tap: ' . $request->getBody();
+        $oauthMiddleware = Middleware::mapRequest(function ($request) {
+            return $request->withHeader('Authorization','Bearer ' . $this->auth->getToken());
         });
-        $params['handler'] = $tapMiddleware($clientHandler);
+        $params['handler'] = $oauthMiddleware($clientHandler);
 
         try {
             $response = $this->client->request(
                 $method,
                 $this->auth->getEndpoint() . '/' . $endpoint,
-                array_merge($headers, $params)
+                $params
             );
-        } catch (GuzzleHttp\Exception\RequestException $e) {
-            //            var_dump($e->getResponse()->getBody());
-//            var_dump($e->getResponse()->getStatusCode());
-//            var_dump($e->getResponse()->getHeader('X-Reason'));
-            throw new Exceptions\UnexpectedException((string) $e->getResponse()->getBody(), $e->getResponse()->getStatusCode());
+        } catch (\Exception $e) {
+            throw $this->convertException($e);
         }
 
         return json_decode((string) $response->getBody());
+    }
+
+    /**
+     * Convert the provided exception.
+     *
+     * @param  Exception $e
+     * @return Exceptions\NotFoundException|Exceptions\BrontoException|Exception
+     */
+    protected function convertException(\Exception $e)
+    {
+        if ($e instanceof GuzzleHttp\Exception\ClientException && $e->getResponse()->getStatusCode() == 404) {
+            return new Exceptions\NotFoundException('not found');
+        }
+
+        if ($e instanceof GuzzleHttp\Exception\BadResponseException) {
+            $message = (string) $e->getResponse()->getBody();
+            if(count($e->getResponse()->getHeader('X-Reason'))){
+                dump($e->getResponse()->getHeader('X-Reason'));
+                $message = (string) $e->getResponse()->getHeader('X-Reason');
+            }
+            return new Exceptions\BrontoException($message, $e->getResponse()->getStatusCode());
+        }
+
+        return $e;
     }
 
     /**

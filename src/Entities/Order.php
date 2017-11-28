@@ -544,11 +544,6 @@ class Order extends AbstractEntity
         $result = get_object_vars($this);
         if(!is_null($result['orderDate'])) $result['orderDate'] = $result['orderDate']->toDateString();
         if(!is_null($result['shippingDate'])) $result['shippingDate'] = $result['shippingDate']->toDateString();
-        unset($result['orderId']);
-        unset($result['createdDate']);
-        unset($result['updatedDate']);
-        if(is_null($result['trackingCookieName'])) unset($result['trackingCookieName']);
-        if(is_null($result['trackingCookieValue'])) unset($result['trackingCookieValue']);
         return $result;
     }
 
