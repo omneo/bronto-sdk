@@ -145,4 +145,14 @@ class RestClient
         return new Modules\OrderService($this);
     }
 
+    /**
+     * Product service module.
+     *
+     * @return Modules\ProductService
+     */
+    public function productService()
+    {
+        return new Modules\ProductService($this);
+    }
+
 }
