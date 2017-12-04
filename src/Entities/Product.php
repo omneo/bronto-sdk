@@ -45,7 +45,7 @@ class Product extends AbstractEntity
     /**
      * @var string
      */
-    protected $additional_images;
+    protected $additionalImages;
 
     /**
      * @var float
@@ -65,7 +65,7 @@ class Product extends AbstractEntity
     /**
      * @var Carbon
      */
-    protected $availability_date;
+    protected $availabilityDate;
 
     /**
      * @var string
