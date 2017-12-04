@@ -16,7 +16,7 @@ class ProductService extends AbstractRestModule
      * @param array $products
      * @return string transaction UUID
      */
-    public function feed_import($products)
+    public function feedImport($products)
     {
         $csv = Writer::createFromFileObject(new \SplTempFileObject());
         $csv->insertOne(array_keys($products[0]));
