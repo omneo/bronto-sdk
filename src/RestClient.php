@@ -20,6 +20,15 @@ class RestClient
     protected $auth;
 
     /**
+     * Products API ID
+     * This ID can be found on the Products Overview page in the BMP,
+     * located on the bottom-right part of the page. It is titled “Products API ID”
+     *
+     * @var string
+     */
+    protected $productsApiId;
+
+    /**
      * Client constructor.
      *
      * @param RestAuthentication $auth
@@ -32,6 +41,29 @@ class RestClient
         $this->client = new GuzzleHttp\Client([
             'handler' => $handler ? $handler : GuzzleHttp\HandlerStack::create(),
         ]);
+    }
+
+    /**
+     * Set the product API ID.
+     *
+     * @param string $id
+     * @return $this
+     */
+    public function setProductsApiId($id)
+    {
+        $this->productsApiId = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the product API ID.
+     *
+     * @return string
+     */
+    public function getProductsApiId()
+    {
+        return $this->productsApiId;
     }
 
     /**

@@ -27,11 +27,16 @@ class ProductService extends AbstractRestModule
 
         echo $csv->__toString();
 
-        return $this->client->post('products/public/feed_import/',['debug' => true, 'multipart' =>
+        return $this->client->post('products/public/feed_import/',['debug' => true, 'multipart' => [
             [
-                'name' => 'file',
+                'name' => 'catalogId',
+                'contents' => $this->client->getProductsApiId()
+            ],
+            [
+                'name' => 'feed',
                 'contents' => $csv->__toString()
             ]
+        ]
         ]);
     }
 

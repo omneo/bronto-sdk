@@ -25,7 +25,8 @@ class LaravelServiceProvider extends ServiceProvider
 
         // Setup the client.
         $this->app->singleton(Bronto\RestClient::class, function () {
-            return (new Bronto\RestClient(resolve(Bronto\RestAuthentication::class)));
+            return (new Bronto\RestClient(resolve(Bronto\RestAuthentication::class)))
+                ->setProductsApiId(config('services.bronto.productsApiId'));
         });
     }
 }
