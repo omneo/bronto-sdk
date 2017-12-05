@@ -60,14 +60,16 @@ class ProductService extends AbstractRestModule
      */
     public function update($product)
     {
+        $payload = new \stdClass();
+        $payload->fields = (new ProductSerializer)->serialize($product);
         $this->client->put(
             'products/public/catalogs/'.$this->client->getProductsApiId().'/products',
             [
                 'headers' => ['Content-Type' => 'application/json'],
-                'body' => [[(new \stdClass())->fields = (new ProductSerializer)->serialize($product)]],
+                'body' => [[$payload]],
                 'debug' => true
             ]
-        )
+        );
     }
 
 }
