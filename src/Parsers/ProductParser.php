@@ -11,7 +11,7 @@ class ProductParser
      * Parse the given array to a Product entity.
      *
      * @param array $payload
-     * @return Order
+     * @return Product
      */
     public function parse($payload)
     {

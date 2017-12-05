@@ -10,7 +10,7 @@ class ProductSerializer
     /**
      * Serialize.
      *
-     * @param  Entities\Order $order
+     * @param  Entities\Product $product
      * @return string
      */
     public function serialize(Entities\Product $product)
