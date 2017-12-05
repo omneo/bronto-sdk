@@ -33,7 +33,7 @@ class ProductService extends AbstractRestModule
     public function feedImport($products)
     {
         $csv = Writer::createFromFileObject(new \SplTempFileObject());
-        $csv->insertOne(array_keys(json_decode(json_encode($products[0]),true)));
+        $csv->insertOne(array_keys(json_decode(json_encode((new ProductSerializer())->serialize($products[0])),true)));
 
         foreach($products as $product){
             $csv->insertOne(array_values(json_decode((new ProductSerializer())->serialize($product),true)));
@@ -61,12 +61,14 @@ class ProductService extends AbstractRestModule
     public function update($product)
     {
         $payload = new \stdClass();
-        $payload->fields = (new ProductSerializer)->serialize($product);
+        $payload->fields = json_decode((new ProductSerializer)->serialize($product));
+        $payload = json_encode([$payload]);
+
         $this->client->put(
             'products/public/catalogs/'.$this->client->getProductsApiId().'/products',
             [
                 'headers' => ['Content-Type' => 'application/json'],
-                'body' => [[$payload]],
+                'body' => $payload,
                 'debug' => true
             ]
         );
