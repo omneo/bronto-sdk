@@ -207,7 +207,7 @@ class Product extends AbstractEntity
     }
 
     /**
-     * @return Carbon
+     * @return Carbon|null
      */
     public function getAvailabilityDate()
     {
@@ -218,7 +218,7 @@ class Product extends AbstractEntity
      * @param Carbon $availabilityDate
      * @return Product
      */
-    public function setAvailabilityDate(Carbon $availabilityDate)
+    public function setAvailabilityDate(Carbon $availabilityDate = null)
     {
         $this->availabilityDate = $availabilityDate;
         return $this;

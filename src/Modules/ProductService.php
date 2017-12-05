@@ -33,7 +33,7 @@ class ProductService extends AbstractRestModule
     public function feedImport($products)
     {
         $csv = Writer::createFromFileObject(new \SplTempFileObject());
-        $csv->insertOne(array_keys(json_decode(json_encode((new ProductSerializer())->serialize($products[0])),true)));
+        $csv->insertOne(array_keys(json_decode((new ProductSerializer())->serialize($products[0]),true)));
 
         foreach($products as $product){
             $csv->insertOne(array_values(json_decode((new ProductSerializer())->serialize($product),true)));
