@@ -23,6 +23,10 @@ class ProductSerializer
         if(is_null($serialized->trackingCookieValue)) unset($serialized->trackingCookieValue);
         */
 
+        if(!is_null($serialized->salePriceEffectiveDateStart)) $serialized->salePriceEffectiveDateStart = (new Carbon($serialized->salePriceEffectiveDateStart))->toIso8601String();
+        if(!is_null($serialized->salePriceEffectiveDateEnd)) $serialized->salePriceEffectiveDateEnd = (new Carbon($serialized->salePriceEffectiveDateEnd))->toIso8601String();
+        if(!is_null($serialized->availabilityDate)) $serialized->availabilityDate = (new Carbon($serialized->availabilityDate))->toIso8601String();
+
         return json_encode($serialized);
     }
 }
