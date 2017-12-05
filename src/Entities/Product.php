@@ -138,12 +138,12 @@ class Product extends AbstractEntity
     /**
      * @var Carbon
      */
-    protected $salePriceEffectiveDateStart;
+    protected $salePriceEffectiveStartDate;
 
     /**
      * @var Carbon
      */
-    protected $salePriceEffectiveDateEnd;
+    protected $salePriceEffectiveEndDate;
 
     /**
      * @var string
@@ -159,6 +159,16 @@ class Product extends AbstractEntity
      * @var string
      */
     protected $upc;
+
+    /**
+     * @var Carbon
+     */
+    protected $createdDate;
+
+    /**
+     * @var Carbon
+     */
+    protected $updatedDate;
 
     /**
      * @return string
@@ -613,36 +623,36 @@ class Product extends AbstractEntity
     /**
      * @return Carbon
      */
-    public function getSalePriceEffectiveDateStart()
+    public function getSalePriceEffectiveStartDate()
     {
-        return $this->salePriceEffectiveDateStart;
+        return $this->salePriceEffectiveStartDate;
     }
 
     /**
-     * @param Carbon $salePriceEffectiveDateStart
+     * @param Carbon $salePriceEffectiveStartDate
      * @return Product
      */
-    public function setSalePriceEffectiveDateStart($salePriceEffectiveDateStart)
+    public function setSalePriceEffectiveStartDate($salePriceEffectiveStartDate)
     {
-        $this->salePriceEffectiveDateStart = $salePriceEffectiveDateStart;
+        $this->salePriceEffectiveStartDate = $salePriceEffectiveStartDate;
         return $this;
     }
 
     /**
      * @return Carbon
      */
-    public function getSalePriceEffectiveDateEnd()
+    public function getSalePriceEffectiveEndDate()
     {
-        return $this->salePriceEffectiveDateEnd;
+        return $this->salePriceEffectiveEndDate;
     }
 
     /**
-     * @param Carbon $salePriceEffectiveDateEnd
+     * @param Carbon $salePriceEffectiveEndDate
      * @return Product
      */
-    public function setSalePriceEffectiveDateEnd($salePriceEffectiveDateEnd)
+    public function setSalePriceEffectiveEndDate($salePriceEffectiveEndDate)
     {
-        $this->salePriceEffectiveDateEnd = $salePriceEffectiveDateEnd;
+        $this->salePriceEffectiveEndDate = $salePriceEffectiveEndDate;
         return $this;
     }
 
@@ -697,6 +707,42 @@ class Product extends AbstractEntity
     public function setUpc($upc)
     {
         $this->upc = $upc;
+        return $this;
+    }
+
+    /**
+     * @return Carbon
+     */
+    public function getCreatedDate()
+    {
+        return $this->createdDate;
+    }
+
+    /**
+     * @param Carbon $createdDate
+     * @return Order
+     */
+    public function setCreatedDate($createdDate)
+    {
+        $this->createdDate = $createdDate;
+        return $this;
+    }
+
+    /**
+     * @return Carbon
+     */
+    public function getUpdatedDate()
+    {
+        return $this->updatedDate;
+    }
+
+    /**
+     * @param Carbon $updatedDate
+     * @return Order
+     */
+    public function setUpdatedDate($updatedDate)
+    {
+        $this->updatedDate = $updatedDate;
         return $this;
     }
 

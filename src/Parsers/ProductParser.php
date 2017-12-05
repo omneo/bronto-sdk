@@ -15,25 +15,13 @@ class ProductParser
      */
     public function parse($payload)
     {
-        $order = (new Entities\Product)
-            ->setProductId($payload->productId)
-            ->setParentProductId($payload->parentProductId)
-            ->setProductUrl($payload->productUrl)
-            ->setTitle($payload->title)
-            ->setDescription($payload->description)
-            ->setPrice($payload->price)
-            ->setQuantity($payload->quantity)
-            ->setAdditionalImages($payload->additionalImages)
-            ->setRating($payload->rating)
-            ->setInventoryThreshold($payload->inventoryThreshhold)
-            ->setAvailability($payload->availability)
-            ->setAvailabilityDate(Carbon::parse((string) $payload->availabilityDate))
-            ->setProductCategory($payload->category)
-            ->setTax($payload->tax)
-            ->setGender($payload->gender)
-            ->setColor($payload->color)
-            ->setSize($payload->size);
+        $product = new Entities\Product();
 
-        return $order;
+        foreach($payload->fields as $field){
+            $setterName = camel_case('set_' . $field->name);
+            if(method_exists($product, $setterName)) $product->{$setterName}($field->value);
+        }
+
+        return $product;
     }
 }
