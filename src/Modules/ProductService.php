@@ -25,8 +25,6 @@ class ProductService extends AbstractRestModule
             $csv->insertOne(array_values(json_decode((new ProductSerializer())->serialize($product),true)));
         }
 
-        echo $csv->__toString();
-
         return $this->client->post('products/public/feed_import/',['debug' => true, 'multipart' => [
             [
                 'name' => 'catalogId',
@@ -38,6 +36,43 @@ class ProductService extends AbstractRestModule
             ]
         ]
         ]);
+    }
+
+    /**
+     * Product find.
+     * Uses product ID
+     *
+     * @param $id
+     * @return Product
+     */
+    public function findById($id)
+    {
+        return (new ProductParser)->parse(
+            $this->client->get('products/public/catalogs/'.$this->client->getProductsApiId().'/products/'.$id,['debug' => true])
+        );
+    }
+
+    /**
+     * Get all Products.
+     *
+     * @param $id
+     * @return Collection
+     */
+    public function all()
+    {
+        $data = $this->client->get('products/public/catalogs/'.$this->client->getProductsApiId().'/products',['debug' => true]);
+
+        $collection = new Collection;
+
+        if(!count($data)) return $collection;
+
+        foreach($data as $item){
+            $collection->push(
+                (new ProductParser)->parse($item)
+            );
+        }
+
+        return $collection;
     }
 
 }
