@@ -22,7 +22,7 @@ class RestClient
     /**
      * Products API ID
      * This ID can be found on the Products Overview page in the BMP,
-     * located on the bottom-right part of the page. It is titled “Products API ID”
+     * located on the bottom-right part of the page. It is titled 'Products API ID'
      *
      * @var string
      */

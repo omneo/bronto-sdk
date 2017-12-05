@@ -708,6 +708,7 @@ class Product extends AbstractEntity
         $result = get_object_vars($this);
         if(!is_null($result['salePriceEffectiveDateStart'])) $result['salePriceEffectiveDateStart'] = $result['salePriceEffectiveDateStart']->toDateString();
         if(!is_null($result['salePriceEffectiveDateEnd'])) $result['salePriceEffectiveDateEnd'] = $result['salePriceEffectiveDateEnd']->toDateString();
+        if(!is_null($result['availabilityDate'])) $result['availabilityDate'] = $result['availabilityDate']->toDateString();
         return $result;
     }
 
