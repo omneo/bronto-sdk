@@ -3,59 +3,17 @@
 namespace Arkade\Bronto\Entities;
 
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
+
+/*
+ * @see https://helpdocs.bronto.com/bmp/reference/r_bmp_product_fields_descriptions.html
+ */
 
 class Product extends AbstractEntity
 {
     /**
      * @var string
      */
-    protected $productId;
-
-    /**
-     * @var string
-     */
-    protected $parentProductId;
-
-    /**
-     * @var string
-     */
-    protected $productUrl;
-
-    /**
-     * @var string
-     */
-    protected $title;
-
-    /**
-     * @var string
-     */
-    protected $description;
-
-    /**
-     * @var string
-     */
-    protected $price;
-
-    /**
-     * @var int
-     */
-    protected $quantity;
-
-    /**
-     * @var string
-     */
-    protected $additionalImages;
-
-    /**
-     * @var float
-     */
-    protected $rating;
-
-    /**
-     * @var int
-     */
-    protected $inventoryThreshold;
+    protected $ageGroup;
 
     /**
      * @var string
@@ -68,9 +26,114 @@ class Product extends AbstractEntity
     protected $availabilityDate;
 
     /**
+     * @var float
+     */
+    protected $averageRating;
+
+    /**
+     * @var string
+     */
+    protected $brand;
+
+    /**
+     * @var string
+     */
+    protected $color;
+
+    /**
+     * @var string
+     */
+    protected $condition;
+
+    /**
+     * @var string
+     */
+    protected $description;
+
+    /**
+     * @var string
+     */
+    protected $gender;
+
+    /**
+     * @var string
+     */
+    protected $gtin;
+
+    /**
+     * @var string
+     */
+    protected $imageUrl;
+
+    /**
+     * @var int
+     */
+    protected $inventoryThreshold;
+
+    /**
+     * @var string
+     */
+    protected $isbn;
+
+    /**
+     * @var string
+     */
+    protected $mpn;
+
+    /**
+     * @var float
+     */
+    protected $margin;
+
+    /**
+     * @var string
+     */
+    protected $mobileUrl;
+
+    /**
+     * @var string
+     */
+    protected $parentProductId;
+
+    /**
+     * @var string
+     */
+    protected $price;
+
+    /**
      * @var string
      */
     protected $productCategory;
+
+    /**
+     * @var string
+     */
+    protected $productId;
+
+    /**
+     * @var string
+     */
+    protected $productTypeMulti;
+
+    /**
+     * @var string
+     */
+    protected $productUrl;
+
+    /**
+     * @var int
+     */
+    protected $quantity;
+
+    /**
+     * @var int
+     */
+    protected $reviewCount;
+
+    /**
+     * @var string
+     */
+    protected $salePrice;
 
     /**
      * @var Carbon
@@ -85,200 +148,33 @@ class Product extends AbstractEntity
     /**
      * @var string
      */
-    protected $tax;
-
-    /**
-     * @var string
-     */
-    protected $gender;
-
-    /**
-     * @var string
-     */
-    protected $color;
-
-    /**
-     * @var string
-     */
     protected $size;
 
     /**
-     * @return string
+     * @var string
      */
-    public function getProductId()
-    {
-        return $this->productId;
-    }
+    protected $title;
 
     /**
-     * @param string $productId
-     * @return Product
+     * @var string
      */
-    public function setProductId($productId)
-    {
-        $this->productId = $productId;
-        return $this;
-    }
+    protected $upc;
 
     /**
      * @return string
      */
-    public function getParentProductId()
+    public function getAgeGroup()
     {
-        return $this->parentProductId;
+        return $this->ageGroup;
     }
 
     /**
-     * @param string $parentProductId
+     * @param string $ageGroup
      * @return Product
      */
-    public function setParentProductId($parentProductId)
+    public function setAgeGroup($ageGroup)
     {
-        $this->parentProductId = $parentProductId;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getProductUrl()
-    {
-        return $this->productUrl;
-    }
-
-    /**
-     * @param string $productUrl
-     * @return Product
-     */
-    public function setProductUrl($productUrl)
-    {
-        $this->productUrl = $productUrl;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param string $title
-     * @return Product
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     * @return Product
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    /**
-     * @param string $price
-     * @return Product
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
-    }
-
-    /**
-     * @param int $quantity
-     * @return Product
-     */
-    public function setQuantity($quantity)
-    {
-        $this->quantity = $quantity;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAdditionalImages()
-    {
-        return $this->additional_images;
-    }
-
-    /**
-     * @param string $additional_images
-     * @return Product
-     */
-    public function setAdditionalImages($additional_images)
-    {
-        $this->additional_images = $additional_images;
-        return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getRating()
-    {
-        return $this->rating;
-    }
-
-    /**
-     * @param float $rating
-     * @return Product
-     */
-    public function setRating($rating)
-    {
-        $this->rating = $rating;
-        return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getInventoryThreshold()
-    {
-        return $this->inventoryThreshold;
-    }
-
-    /**
-     * @param int $inventoryThreshold
-     * @return Product
-     */
-    public function setInventoryThreshold($inventoryThreshold)
-    {
-        $this->inventoryThreshold = $inventoryThreshold;
+        $this->ageGroup = $ageGroup;
         return $this;
     }
 
@@ -305,16 +201,286 @@ class Product extends AbstractEntity
      */
     public function getAvailabilityDate()
     {
-        return $this->availability_date;
+        return $this->availabilityDate;
     }
 
     /**
-     * @param Carbon $availability_date
+     * @param Carbon $availabilityDate
      * @return Product
      */
-    public function setAvailabilityDate($availability_date)
+    public function setAvailabilityDate($availabilityDate)
     {
-        $this->availability_date = $availability_date;
+        $this->availabilityDate = $availabilityDate;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getAverageRating()
+    {
+        return $this->averageRating;
+    }
+
+    /**
+     * @param float $averageRating
+     * @return Product
+     */
+    public function setAverageRating($averageRating)
+    {
+        $this->averageRating = $averageRating;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBrand()
+    {
+        return $this->brand;
+    }
+
+    /**
+     * @param string $brand
+     * @return Product
+     */
+    public function setBrand($brand)
+    {
+        $this->brand = $brand;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param string $color
+     * @return Product
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCondition()
+    {
+        return $this->condition;
+    }
+
+    /**
+     * @param string $condition
+     * @return Product
+     */
+    public function setCondition($condition)
+    {
+        $this->condition = $condition;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     * @return Product
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @param string $gender
+     * @return Product
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGtin()
+    {
+        return $this->gtin;
+    }
+
+    /**
+     * @param string $gtin
+     * @return Product
+     */
+    public function setGtin($gtin)
+    {
+        $this->gtin = $gtin;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageUrl()
+    {
+        return $this->imageUrl;
+    }
+
+    /**
+     * @param string $imageUrl
+     * @return Product
+     */
+    public function setImageUrl($imageUrl)
+    {
+        $this->imageUrl = $imageUrl;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getInventoryThreshold()
+    {
+        return $this->inventoryThreshold;
+    }
+
+    /**
+     * @param int $inventoryThreshold
+     * @return Product
+     */
+    public function setInventoryThreshold($inventoryThreshold)
+    {
+        $this->inventoryThreshold = $inventoryThreshold;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIsbn()
+    {
+        return $this->isbn;
+    }
+
+    /**
+     * @param string $isbn
+     * @return Product
+     */
+    public function setIsbn($isbn)
+    {
+        $this->isbn = $isbn;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMpn()
+    {
+        return $this->mpn;
+    }
+
+    /**
+     * @param string $mpn
+     * @return Product
+     */
+    public function setMpn($mpn)
+    {
+        $this->mpn = $mpn;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getMargin()
+    {
+        return $this->margin;
+    }
+
+    /**
+     * @param float $margin
+     * @return Product
+     */
+    public function setMargin($margin)
+    {
+        $this->margin = $margin;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMobileUrl()
+    {
+        return $this->mobileUrl;
+    }
+
+    /**
+     * @param string $mobileUrl
+     * @return Product
+     */
+    public function setMobileUrl($mobileUrl)
+    {
+        $this->mobileUrl = $mobileUrl;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getParentProductId()
+    {
+        return $this->parentProductId;
+    }
+
+    /**
+     * @param string $parentProductId
+     * @return Product
+     */
+    public function setParentProductId($parentProductId)
+    {
+        $this->parentProductId = $parentProductId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param string $price
+     * @return Product
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
         return $this;
     }
 
@@ -333,6 +499,114 @@ class Product extends AbstractEntity
     public function setProductCategory($productCategory)
     {
         $this->productCategory = $productCategory;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProductId()
+    {
+        return $this->productId;
+    }
+
+    /**
+     * @param string $productId
+     * @return Product
+     */
+    public function setProductId($productId)
+    {
+        $this->productId = $productId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProductTypeMulti()
+    {
+        return $this->productTypeMulti;
+    }
+
+    /**
+     * @param string $productTypeMulti
+     * @return Product
+     */
+    public function setProductTypeMulti($productTypeMulti)
+    {
+        $this->productTypeMulti = $productTypeMulti;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProductUrl()
+    {
+        return $this->productUrl;
+    }
+
+    /**
+     * @param string $productUrl
+     * @return Product
+     */
+    public function setProductUrl($productUrl)
+    {
+        $this->productUrl = $productUrl;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * @param int $quantity
+     * @return Product
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getReviewCount()
+    {
+        return $this->reviewCount;
+    }
+
+    /**
+     * @param int $reviewCount
+     * @return Product
+     */
+    public function setReviewCount($reviewCount)
+    {
+        $this->reviewCount = $reviewCount;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSalePrice()
+    {
+        return $this->salePrice;
+    }
+
+    /**
+     * @param string $salePrice
+     * @return Product
+     */
+    public function setSalePrice($salePrice)
+    {
+        $this->salePrice = $salePrice;
         return $this;
     }
 
@@ -375,60 +649,6 @@ class Product extends AbstractEntity
     /**
      * @return string
      */
-    public function getTax()
-    {
-        return $this->tax;
-    }
-
-    /**
-     * @param string $tax
-     * @return Product
-     */
-    public function setTax($tax)
-    {
-        $this->tax = $tax;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getGender()
-    {
-        return $this->gender;
-    }
-
-    /**
-     * @param string $gender
-     * @return Product
-     */
-    public function setGender($gender)
-    {
-        $this->gender = $gender;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getColor()
-    {
-        return $this->color;
-    }
-
-    /**
-     * @param string $color
-     * @return Product
-     */
-    public function setColor($color)
-    {
-        $this->color = $color;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
     public function getSize()
     {
         return $this->size;
@@ -441,6 +661,42 @@ class Product extends AbstractEntity
     public function setSize($size)
     {
         $this->size = $size;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     * @return Product
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUpc()
+    {
+        return $this->upc;
+    }
+
+    /**
+     * @param string $upc
+     * @return Product
+     */
+    public function setUpc($upc)
+    {
+        $this->upc = $upc;
         return $this;
     }
 
