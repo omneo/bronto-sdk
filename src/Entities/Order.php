@@ -249,7 +249,7 @@ class Order extends AbstractEntity
     }
 
     /**
-     * @return Carbon
+     * @return Carbon|null
      */
     public function getShippingDate()
     {
@@ -260,7 +260,7 @@ class Order extends AbstractEntity
      * @param Carbon $shippingDate
      * @return Order
      */
-    public function setShippingDate($shippingDate)
+    public function setShippingDate(Carbon $shippingDate = null)
     {
         $this->shippingDate = $shippingDate;
         return $this;
@@ -429,7 +429,7 @@ class Order extends AbstractEntity
     }
 
     /**
-     * @return Carbon
+     * @return Carbon|null
      */
     public function getOrderDate()
     {
@@ -440,7 +440,7 @@ class Order extends AbstractEntity
      * @param Carbon $orderDate
      * @return Order
      */
-    public function setOrderDate(Carbon $orderDate)
+    public function setOrderDate(Carbon $orderDate = null)
     {
         $this->orderDate = $orderDate;
         return $this;

@@ -621,7 +621,7 @@ class Product extends AbstractEntity
     }
 
     /**
-     * @return Carbon
+     * @return Carbon|null
      */
     public function getSalePriceEffectiveStartDate()
     {
@@ -632,14 +632,14 @@ class Product extends AbstractEntity
      * @param Carbon $salePriceEffectiveStartDate
      * @return Product
      */
-    public function setSalePriceEffectiveStartDate(Carbon $salePriceEffectiveStartDate)
+    public function setSalePriceEffectiveStartDate(Carbon $salePriceEffectiveStartDate = null)
     {
         $this->salePriceEffectiveStartDate = $salePriceEffectiveStartDate;
         return $this;
     }
 
     /**
-     * @return Carbon
+     * @return Carbon|null
      */
     public function getSalePriceEffectiveEndDate()
     {
@@ -650,7 +650,7 @@ class Product extends AbstractEntity
      * @param Carbon $salePriceEffectiveEndDate
      * @return Product
      */
-    public function setSalePriceEffectiveEndDate(Carbon $salePriceEffectiveEndDate)
+    public function setSalePriceEffectiveEndDate(Carbon $salePriceEffectiveEndDate = null)
     {
         $this->salePriceEffectiveEndDate = $salePriceEffectiveEndDate;
         return $this;
@@ -722,7 +722,7 @@ class Product extends AbstractEntity
      * @param Carbon $createdDate
      * @return Order
      */
-    public function setCreatedDate(Carbon $createdDate)
+    public function setCreatedDate(Carbon $createdDate = null)
     {
         $this->createdDate = $createdDate;
         return $this;
@@ -740,7 +740,7 @@ class Product extends AbstractEntity
      * @param Carbon $updatedDate
      * @return Order
      */
-    public function setUpdatedDate(Carbon $updatedDate)
+    public function setUpdatedDate(Carbon $updatedDate = null)
     {
         $this->updatedDate = $updatedDate;
         return $this;
