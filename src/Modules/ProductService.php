@@ -11,6 +11,20 @@ use League\Csv\Writer;
 class ProductService extends AbstractRestModule
 {
     /**
+     * Product find.
+     * Uses product ID
+     *
+     * @param $id
+     * @return Product
+     */
+    public function find($id)
+    {
+        return (new ProductParser)->parse(
+            $this->client->get('products/public/catalogs/'.$this->client->getProductsApiId().'/products/'.$id,['debug' => true])
+        );
+    }
+
+    /**
      * Product feed import.
      *
      * @param array $products
@@ -39,40 +53,21 @@ class ProductService extends AbstractRestModule
     }
 
     /**
-     * Product find.
-     * Uses product ID
+     * Product update.
      *
-     * @param $id
+     * @param $product
      * @return Product
      */
-    public function findById($id)
+    public function update($product)
     {
-        return (new ProductParser)->parse(
-            $this->client->get('products/public/catalogs/'.$this->client->getProductsApiId().'/products/'.$id,['debug' => true])
-        );
-    }
-
-    /**
-     * Get all Products.
-     *
-     * @param $id
-     * @return Collection
-     */
-    public function all()
-    {
-        $data = $this->client->get('products/public/catalogs/'.$this->client->getProductsApiId().'/products',['debug' => true]);
-
-        $collection = new Collection;
-
-        if(!count($data)) return $collection;
-
-        foreach($data as $item){
-            $collection->push(
-                (new ProductParser)->parse($item)
-            );
-        }
-
-        return $collection;
+        $this->client->put(
+            'products/public/catalogs/'.$this->client->getProductsApiId().'/products',
+            [
+                'headers' => ['Content-Type' => 'application/json'],
+                'body' => [[(new \stdClass())->fields = (new ProductSerializer)->serialize($product)]],
+                'debug' => true
+            ]
+        )
     }
 
 }

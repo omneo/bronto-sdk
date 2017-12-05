@@ -16,10 +16,11 @@ class ProductParser
     public function parse($payload)
     {
         $product = new Entities\Product();
+
         foreach($payload->fields as $field){
             $value = (!is_null($field->value) && $field->type === 'date') ? Carbon::parse((string) $field->value) : $field->value;
             $setterName = camel_case('set_' . $field->name);
-            if(method_exists($product, $setterName)) $product->{$setterName}($field->value);
+            if(method_exists($product, $setterName)) $product->{$setterName}($value);
         }
 
         return $product;
