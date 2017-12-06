@@ -58,7 +58,7 @@ class ProductService extends AbstractRestModule
      * @param $product
      * @return Product
      */
-    public function update($product)
+    public function update(Product $product)
     {
         $payload = new \stdClass();
         $payload->fields = json_decode((new ProductSerializer)->serialize($product));

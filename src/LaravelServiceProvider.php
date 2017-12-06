@@ -14,7 +14,7 @@ class LaravelServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Setup the auth.
+        // Setup the rest client auth.
         $this->app->singleton(Bronto\RestAuthentication::class, function(){
             return (new Bronto\RestAuthentication)
                 ->setAuthUrl(config('services.bronto.authUrl'))
@@ -23,10 +23,17 @@ class LaravelServiceProvider extends ServiceProvider
                 ->setClientSecret(config('services.bronto.clientSecret'));
         });
 
-        // Setup the client.
+        // Setup the rest client.
         $this->app->singleton(Bronto\RestClient::class, function () {
             return (new Bronto\RestClient(resolve(Bronto\RestAuthentication::class)))
                 ->setProductsApiId(config('services.bronto.productsApiId'));
+        });
+
+        // Setup the soap client
+        $this->app->singleton(Bronto\SoapClient::class, function () {
+            return (new Bronto\SoapClient())
+                ->setToken(config('services.bronto.soapToken'))
+                ->setListId(config('services.bronto.listId'));
         });
     }
 }
