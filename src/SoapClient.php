@@ -2,8 +2,6 @@
 
 namespace Arkade\Bronto;
 
-use Bronto_Api;
-
 class SoapClient
 {
     /**
@@ -24,12 +22,10 @@ class SoapClient
     /**
      * Client constructor.
      *
-     * @param RestAuthentication $auth
-     * @param GuzzleHttp\HandlerStack|null $handler
      */
     public function __construct()
     {
-        $this->client = new Bronto_Api();
+        $this->client = new \Bronto_Api();
     }
 
     /**
