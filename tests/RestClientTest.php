@@ -9,7 +9,7 @@ use GuzzleHttp\Handler\MockHandler;
 use Arkade\Bronto\RestAuthentication;
 use PHPUnit\Framework\TestCase;
 
-class ClientTest extends TestCase
+class RestClientTest extends TestCase
 {
     public function testRequest()
     {
