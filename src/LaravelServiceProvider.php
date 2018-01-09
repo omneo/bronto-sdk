@@ -8,6 +8,19 @@ use Arkade\Bronto;
 class LaravelServiceProvider extends ServiceProvider
 {
     /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        // Publish the config.
+        $this->publishes([
+            __DIR__ . '/Config/bronto.php' => config_path('bronto.php'),
+        ]);
+    }
+
+    /**
      * Register bindings in the container.
      *
      * @return void
