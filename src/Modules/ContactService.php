@@ -111,7 +111,7 @@ class ContactService extends AbstractSoapModule
 
             foreach($fields as $field){
                 $field = $field->toArray();
-                echo "['" . $field['name'] . "' => " . "'" . $field['id'] . "'],\r\n";
+                echo $field['name'] . "' => " . "'" . $field['id'] . ",\r\n";
             }
 
         } catch (Exception $e) {
