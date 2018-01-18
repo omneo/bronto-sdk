@@ -1,1 +1,251 @@
-{"id":"9330947716452","fields":[{"id":14,"name":"product_url","value":null,"type":"url"},{"id":29,"name":"color","value":"REBLK001","type":"text"},{"id":27,"name":"gender","value":null,"type":"text"},{"id":25,"name":"isbn","value":null,"type":"id"},{"id":36,"name":"mobile_url","value":null,"type":"url"},{"id":12,"name":"description","value":null,"type":"textarea"},{"id":34,"name":"review_count","value":null,"type":"long"},{"id":17,"name":"availability","value":null,"type":"text"},{"id":11,"name":"title","value":"SPARKLE CARDI CHEESE","type":"text"},{"id":161,"name":"Sale_Price_Effective_End_Date","value":null,"type":"date"},{"id":32,"name":"parent_product_id","value":null,"type":"text"},{"id":19,"name":"price","value":null,"type":"currency"},{"id":10,"name":"product_id","value":"9330947716452","type":"id"},{"id":3573,"name":"product_type_multi","value":null,"type":"multi"},{"id":21,"name":"brand","value":"TEST","type":"text"},{"id":421,"name":"inventory_threshold","value":null,"type":"double"},{"id":22,"name":"gtin","value":null,"type":"id"},{"id":35,"name":"margin","value":null,"type":"double"},{"id":31,"name":"quantity","value":null,"type":"double"},{"id":28,"name":"age_group","value":null,"type":"text"},{"id":15,"name":"image_url","value":null,"type":"url"},{"id":24,"name":"upc","value":"9330947716452","type":"id"},{"id":33,"name":"average_rating","value":null,"type":"double"},{"id":23,"name":"mpn","value":null,"type":"id"},{"id":20,"name":"sale_price","value":null,"type":"currency"},{"id":16,"name":"condition","value":null,"type":"text"},{"id":30,"name":"size","value":null,"type":"text"},{"id":18,"name":"availability_date","value":null,"type":"date"},{"id":160,"name":"Sale_Price_Effective_Start_Date","value":null,"type":"date"},{"id":13,"name":"product_category","value":null,"type":"text"},{"id":2,"name":"catalog_id","value":1103,"type":"long"},{"id":7,"name":"price_modified_date","value":null,"type":"date"},{"id":9,"name":"archived","value":false,"type":"boolean"},{"id":615,"name":"percentage_price_change","value":null,"type":"double"},{"id":8,"name":"quantity_modified_date","value":null,"type":"date"},{"id":1,"name":"site_id","value":35560,"type":"long"},{"id":5,"name":"created_date","value":"2017-12-05T00:39:47.618Z","type":"date"},{"id":6,"name":"updated_date","value":"2017-12-05T22:00:42.236Z","type":"date"},{"id":614,"name":"availability_modified_date","value":null,"type":"date"},{"id":2186,"name":"parent_child_type","value":"standalone","type":"text"},{"id":4,"name":"status_modified_date","value":null,"type":"date"}]}
+{
+  "id": "9330947716452",
+  "fields": [
+    {
+      "id": 14,
+      "name": "product_url",
+      "value": null,
+      "type": "url"
+    },
+    {
+      "id": 29,
+      "name": "color",
+      "value": "REBLK001",
+      "type": "text"
+    },
+    {
+      "id": 27,
+      "name": "gender",
+      "value": null,
+      "type": "text"
+    },
+    {
+      "id": 25,
+      "name": "isbn",
+      "value": null,
+      "type": "id"
+    },
+    {
+      "id": 36,
+      "name": "mobile_url",
+      "value": null,
+      "type": "url"
+    },
+    {
+      "id": 12,
+      "name": "description",
+      "value": null,
+      "type": "textarea"
+    },
+    {
+      "id": 34,
+      "name": "review_count",
+      "value": null,
+      "type": "long"
+    },
+    {
+      "id": 17,
+      "name": "availability",
+      "value": null,
+      "type": "text"
+    },
+    {
+      "id": 11,
+      "name": "title",
+      "value": "SPARKLE CARDI CHEESE",
+      "type": "text"
+    },
+    {
+      "id": 161,
+      "name": "Sale_Price_Effective_End_Date",
+      "value": null,
+      "type": "date"
+    },
+    {
+      "id": 32,
+      "name": "parent_product_id",
+      "value": null,
+      "type": "text"
+    },
+    {
+      "id": 19,
+      "name": "price",
+      "value": null,
+      "type": "currency"
+    },
+    {
+      "id": 10,
+      "name": "product_id",
+      "value": "9330947716452",
+      "type": "id"
+    },
+    {
+      "id": 3573,
+      "name": "product_type_multi",
+      "value": null,
+      "type": "multi"
+    },
+    {
+      "id": 21,
+      "name": "brand",
+      "value": "TEST",
+      "type": "text"
+    },
+    {
+      "id": 421,
+      "name": "inventory_threshold",
+      "value": null,
+      "type": "double"
+    },
+    {
+      "id": 22,
+      "name": "gtin",
+      "value": null,
+      "type": "id"
+    },
+    {
+      "id": 35,
+      "name": "margin",
+      "value": null,
+      "type": "double"
+    },
+    {
+      "id": 31,
+      "name": "quantity",
+      "value": null,
+      "type": "double"
+    },
+    {
+      "id": 28,
+      "name": "age_group",
+      "value": null,
+      "type": "text"
+    },
+    {
+      "id": 15,
+      "name": "image_url",
+      "value": null,
+      "type": "url"
+    },
+    {
+      "id": 24,
+      "name": "upc",
+      "value": "9330947716452",
+      "type": "id"
+    },
+    {
+      "id": 33,
+      "name": "average_rating",
+      "value": null,
+      "type": "double"
+    },
+    {
+      "id": 23,
+      "name": "mpn",
+      "value": null,
+      "type": "id"
+    },
+    {
+      "id": 20,
+      "name": "sale_price",
+      "value": null,
+      "type": "currency"
+    },
+    {
+      "id": 16,
+      "name": "condition",
+      "value": null,
+      "type": "text"
+    },
+    {
+      "id": 30,
+      "name": "size",
+      "value": null,
+      "type": "text"
+    },
+    {
+      "id": 18,
+      "name": "availability_date",
+      "value": null,
+      "type": "date"
+    },
+    {
+      "id": 160,
+      "name": "Sale_Price_Effective_Start_Date",
+      "value": null,
+      "type": "date"
+    },
+    {
+      "id": 13,
+      "name": "product_category",
+      "value": null,
+      "type": "text"
+    },
+    {
+      "id": 2,
+      "name": "catalog_id",
+      "value": 1103,
+      "type": "long"
+    },
+    {
+      "id": 7,
+      "name": "price_modified_date",
+      "value": null,
+      "type": "date"
+    },
+    {
+      "id": 9,
+      "name": "archived",
+      "value": false,
+      "type": "boolean"
+    },
+    {
+      "id": 615,
+      "name": "percentage_price_change",
+      "value": null,
+      "type": "double"
+    },
+    {
+      "id": 8,
+      "name": "quantity_modified_date",
+      "value": null,
+      "type": "date"
+    },
+    {
+      "id": 1,
+      "name": "site_id",
+      "value": 35560,
+      "type": "long"
+    },
+    {
+      "id": 5,
+      "name": "created_date",
+      "value": "2017-12-05T00:39:47.618Z",
+      "type": "date"
+    },
+    {
+      "id": 6,
+      "name": "updated_date",
+      "value": "2017-12-05T22:00:42.236Z",
+      "type": "date"
+    },
+    {
+      "id": 614,
+      "name": "availability_modified_date",
+      "value": null,
+      "type": "date"
+    },
+    {
+      "id": 2186,
+      "name": "parent_child_type",
+      "value": "standalone",
+      "type": "text"
+    },
+    {
+      "id": 4,
+      "name": "status_modified_date",
+      "value": null,
+      "type": "date"
+    }
+  ]
+}

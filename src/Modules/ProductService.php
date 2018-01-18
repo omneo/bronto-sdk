@@ -20,7 +20,10 @@ class ProductService extends AbstractRestModule
     public function find($id)
     {
         return (new ProductParser)->parse(
-            $this->client->get('products/public/catalogs/'.$this->client->getProductsApiId().'/products/'.$id,['debug' => true])
+            $this->client->get(
+                'products/public/catalogs/' . $this->client->getProductsApiId() . '/products/' . $id,
+                ['debug' => true]
+            )
         );
     }
 
@@ -28,27 +31,29 @@ class ProductService extends AbstractRestModule
      * Product feed import.
      *
      * @param array $products
-     * @return string transaction UUID
+     * @return \Psr\Http\Message\ResponseInterface
      */
     public function feedImport($products)
     {
         $csv = Writer::createFromFileObject(new \SplTempFileObject());
-        $csv->insertOne(array_keys(json_decode((new ProductSerializer())->serialize($products[0]),true)));
+        $csv->insertOne(array_keys(json_decode((new ProductSerializer())->serialize($products[0]), true)));
 
-        foreach($products as $product){
-            $csv->insertOne(array_values(json_decode((new ProductSerializer())->serialize($product),true)));
+        foreach ($products as $product) {
+            $csv->insertOne(array_values(json_decode((new ProductSerializer())->serialize($product), true)));
         }
 
-        return $this->client->post('products/public/feed_import/',['debug' => true, 'multipart' => [
-            [
-                'name' => 'catalogId',
-                'contents' => $this->client->getProductsApiId()
-            ],
-            [
-                'name' => 'feed',
-                'contents' => $csv->__toString()
+        return $this->client->post('products/public/feed_import/', [
+            'debug'     => true,
+            'multipart' => [
+                [
+                    'name'     => 'catalogId',
+                    'contents' => $this->client->getProductsApiId()
+                ],
+                [
+                    'name'     => 'feed',
+                    'contents' => $csv->__toString()
+                ]
             ]
-        ]
         ]);
     }
 
@@ -60,16 +65,16 @@ class ProductService extends AbstractRestModule
      */
     public function update(Product $product)
     {
-        $payload = new \stdClass();
+        $payload         = new \stdClass();
         $payload->fields = json_decode((new ProductSerializer)->serialize($product));
-        $payload = json_encode([$payload]);
+        $payload         = json_encode([$payload]);
 
         $this->client->put(
-            'products/public/catalogs/'.$this->client->getProductsApiId().'/products',
+            'products/public/catalogs/' . $this->client->getProductsApiId() . '/products',
             [
                 'headers' => ['Content-Type' => 'application/json'],
-                'body' => $payload,
-                'debug' => true
+                'body'    => $payload,
+                'debug'   => true
             ]
         );
     }

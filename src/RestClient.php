@@ -74,6 +74,7 @@ class RestClient
      * @param array $params
      * @return Http\Message\ResponseInterface
      * @throws Exceptions\BrontoException
+     * @throws Exceptions\NotFoundException
      */
     public function request($method, $endpoint, array $params = [])
     {
