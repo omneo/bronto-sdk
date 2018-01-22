@@ -19,11 +19,8 @@ class ContactService extends AbstractSoapModule
         $contactRow = $contactObject->createRow();
         $contactRow->email = $contact->getEmail();
         $contactRow->status = \Bronto_Api_Contact::STATUS_ONBOARDING;
-        $contactRow->firstName = $contact->getFirstName();
-        $contactRow->lastName = $contact->getLastName();
 
         // Add Contact to List
-        // $list can be the (string) ID or a Bronto_Api_List instance
         $contactRow->addToList($this->client->getListId());
 
         // Set a custom Field value
@@ -111,7 +108,7 @@ class ContactService extends AbstractSoapModule
 
             foreach($fields as $field){
                 $field = $field->toArray();
-                echo $field['name'] . "' => " . "'" . $field['id'] . ",\r\n";
+                echo "'" . $field['name'] . "' => " . "'" . $field['id'] . "',\r\n";
             }
 
         } catch (Exception $e) {
