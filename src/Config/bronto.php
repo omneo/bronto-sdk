@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'contact_field_mappings' => [
+    'field_mappings' => [
         'firstName' => '0bce03e9000000000000000000000001cb4a',
         'lastName' => '0bce03e9000000000000000000000001cb4c'
     ],
@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'customer_mappings' => [
+    'contact_mappings' => [
         'id' => 'id',
         'firstName' => 'firstname',
         'lastName' => 'lastname',

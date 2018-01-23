@@ -3,6 +3,7 @@
 namespace Arkade\Bronto\Modules;
 
 use Arkade\Bronto\Entities\Contact;
+use Arkade\Bronto\Serializers\ContactSerializer;
 
 class ContactService extends AbstractSoapModule
 {
@@ -23,10 +24,18 @@ class ContactService extends AbstractSoapModule
         // Add Contact to List
         $contactRow->addToList($this->client->getListId());
 
-        // Set a custom Field value
-        // $field can be the (string) ID or a Bronto_Api_Field instance
-        $contactRow->setField('FirstName', $contact->getFirstName());
-        $contactRow->setField('LastName', $contact->getLastName());
+        // The mappings for this implementation
+        $fieldMappings = config('bronto.field_mappings');
+        $contactMappings = config('bronto.contact_mappings');
+
+        // Transform the Contact entity to a flattened array
+        $contactArray = array_filter(json_decode((new ContactSerializer())->serialize($contact),true));
+
+        // Map the fields to Bronto field ID's and set the fields on the contact row
+        foreach ($contactArray as $key => $value){
+            if($key === 'email' || $key === 'id') continue;
+            $contactRow->setField($fieldMappings[$contactMappings[$key]], $value);
+        }
 
         // Save
         try {

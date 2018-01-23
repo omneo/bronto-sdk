@@ -3,6 +3,7 @@
 namespace Arkade\Bronto\Entities;
 
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class Contact extends AbstractEntity
 {
@@ -97,8 +98,6 @@ class Contact extends AbstractEntity
     protected $creationDate;
 
     /**
-     * Collection of attributes.
-     *
      * @var Collection
      */
     protected $attributes;
