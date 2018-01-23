@@ -97,6 +97,13 @@ class Contact extends AbstractEntity
     protected $creationDate;
 
     /**
+     * Collection of attributes.
+     *
+     * @var Collection
+     */
+    protected $attributes;
+
+    /**
      * @return string
      */
     public function getId()
@@ -414,9 +421,32 @@ class Contact extends AbstractEntity
      * @param Carbon $creationDate
      * @return Contact
      */
-    public function setCreationDate(Carbon $previousLoginTime = null)
+    public function setCreationDate(Carbon $creationDate = null)
     {
         $this->creationDate = $creationDate;
+        return $this;
+    }
+
+    /**
+     * Return collection of attributes.
+     *
+     * @return Collection
+     */
+    public function getAttributes()
+    {
+        return $this->attributes ?: $this->attributes = new Collection;
+    }
+
+    /**
+     * Set collection of attributes.
+     *
+     * @param  Collection $attributes
+     * @return static
+     */
+    public function setAttributes(Collection $attributes)
+    {
+        $this->attributes = $attributes;
+
         return $this;
     }
 
