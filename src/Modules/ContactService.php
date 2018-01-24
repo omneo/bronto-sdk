@@ -10,8 +10,8 @@ class ContactService extends AbstractSoapModule
     /**
      * Create a contact in Bronto
      *
-     * @param Contact
-     * @return Contact
+     * @param Contact $contact
+     * @return \Bronto_Api_Contact_Row
      */
     public function create(Contact $contact)
     {
