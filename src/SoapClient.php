@@ -2,6 +2,8 @@
 
 namespace Arkade\Bronto;
 
+use Bronto_Api;
+
 class SoapClient
 {
     /**

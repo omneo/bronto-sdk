@@ -22,7 +22,7 @@ class ProductService extends AbstractRestModule
         return (new ProductParser)->parse(
             $this->client->get(
                 'products/public/catalogs/' . $this->client->getProductsApiId() . '/products/' . $id,
-                ['debug' => true]
+                ['debug' => env('APP_DEBUG')]
             )
         );
     }
@@ -43,7 +43,7 @@ class ProductService extends AbstractRestModule
         }
 
         return $this->client->post('products/public/feed_import/', [
-            'debug'     => true,
+            'debug'     => env('APP_DEBUG'),
             'multipart' => [
                 [
                     'name'     => 'catalogId',
@@ -74,7 +74,7 @@ class ProductService extends AbstractRestModule
             [
                 'headers' => ['Content-Type' => 'application/json'],
                 'body'    => $payload,
-                'debug'   => true
+                'debug'   => env('APP_DEBUG')
             ]
         );
     }

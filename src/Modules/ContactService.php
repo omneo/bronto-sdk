@@ -76,11 +76,13 @@ class ContactService extends AbstractSoapModule
     /**
      * Find contact by Email
      *
-     * @param Contact
+     * @param string $email
      * @return Contact
      */
-    public function findByEmail(Contact $contact)
+    public function findByEmail($email)
     {
+        $contact = new Contact();
+        $contact->setEmail($email);
         $contactObject = $this->client->getClient()->getContactObject();
 
         $contactsFilter['email'] = ['value' => $contact->getEmail(), 'operator' => 'EqualTo'];
@@ -89,14 +91,9 @@ class ContactService extends AbstractSoapModule
 
         // Save
         try {
-
             $contacts = $contactObject->readAll($contactsFilter, $fields, false);
-
-            if (!$contacts->count()) return null;
-
-            return $contacts[0];
-
-        } catch (Exception $e) {
+            return $contacts->count() ? $contacts[0] : null;
+        } catch (\Exception $e) {
             // Handle error
         }
     }
@@ -120,7 +117,7 @@ class ContactService extends AbstractSoapModule
                 echo "'" . $field['name'] . "' => " . "'" . $field['id'] . "',\r\n";
             }
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // Handle error
         }
     }

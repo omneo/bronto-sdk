@@ -19,7 +19,7 @@ class OrderService extends AbstractRestModule
     public function find($id)
     {
         return (new OrderParser)->parse(
-            $this->client->get('orders/'.$id,['debug' => true])
+            $this->client->get('orders/'.$id,['debug' => env('APP_DEBUG')])
         );
     }
 
@@ -32,7 +32,7 @@ class OrderService extends AbstractRestModule
      */
     public function findById($id)
     {
-        $data = $this->client->get('orders?customerOrderId='.$id,['debug' => true]);
+        $data = $this->client->get('orders?customerOrderId='.$id,['debug' => env('APP_DEBUG')]);
 
         $collection = new Collection;
 
@@ -66,7 +66,7 @@ class OrderService extends AbstractRestModule
                 [
                     'headers' => ['Content-Type' => 'application/json'],
                     'body' => (new OrderSerializer)->serialize($order),
-                    'debug' => true
+                    'debug' => env('APP_DEBUG')
                 ]
             )
         );
@@ -92,7 +92,7 @@ class OrderService extends AbstractRestModule
                 [
                     'headers' => ['Content-Type' => 'application/json'],
                     'body' => (new OrderSerializer)->serialize($order),
-                    'debug' => true
+                    'debug' => env('APP_DEBUG')
                 ]
             )
         );
@@ -118,7 +118,7 @@ class OrderService extends AbstractRestModule
                 [
                     'headers' => ['Content-Type' => 'application/json'],
                     'body' => (new OrderSerializer)->serialize($order),
-                    'debug' => true
+                    'debug' => env('APP_DEBUG')
                 ]
             )
         );
@@ -133,7 +133,7 @@ class OrderService extends AbstractRestModule
      */
     public function delete($id)
     {
-        return $this->client->delete('orders/'.$id, ['debug' => true]);
+        return $this->client->delete('orders/'.$id, ['debug' => env('APP_DEBUG')]);
     }
 
     /**
@@ -145,6 +145,6 @@ class OrderService extends AbstractRestModule
      */
     public function deleteById($id)
     {
-        return $this->client->delete('orders/customerOrderId/'.$id,['debug' => true]);
+        return $this->client->delete('orders/customerOrderId/'.$id,['debug' => env('APP_DEBUG')]);
     }
 }

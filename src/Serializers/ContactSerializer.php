@@ -9,7 +9,7 @@ class ContactSerializer
     /**
      * Serialize.
      *
-     * @param Entities\Order $order
+     * @param Entities\Contact $contact
      * @return string
      */
     public function serialize(Entities\Contact $contact)
