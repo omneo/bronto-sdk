@@ -4,6 +4,7 @@ namespace Arkade\Bronto\Modules;
 
 use Arkade\Bronto\Entities\Contact;
 use Arkade\Bronto\Serializers\ContactSerializer;
+use Carbon\Carbon;
 
 class ContactService extends AbstractSoapModule
 {
@@ -34,7 +35,10 @@ class ContactService extends AbstractSoapModule
         // Map the fields to Bronto field ID's and set the fields on the contact row
         foreach ($contactArray as $key => $value){
             if($key === 'email' || $key === 'id') continue;
-            $contactRow->setField($fieldMappings[$contactMappings[$key]], $value);
+
+            $value = isset($value['date']) ? Carbon::parse($value['date'])->toDateString() : $value;
+
+            $contactRow->setField($fieldMappings[$contactMappings[$key]], (string)$value);
         }
 
         // Save
@@ -76,13 +80,11 @@ class ContactService extends AbstractSoapModule
     /**
      * Find contact by Email
      *
-     * @param string $email
+     * @param Contact
      * @return Contact
      */
-    public function findByEmail($email)
+    public function findByEmail(Contact $contact)
     {
-        $contact = new Contact();
-        $contact->setEmail($email);
         $contactObject = $this->client->getClient()->getContactObject();
 
         $contactsFilter['email'] = ['value' => $contact->getEmail(), 'operator' => 'EqualTo'];
@@ -91,9 +93,14 @@ class ContactService extends AbstractSoapModule
 
         // Save
         try {
+
             $contacts = $contactObject->readAll($contactsFilter, $fields, false);
-            return $contacts->count() ? $contacts[0] : null;
-        } catch (\Exception $e) {
+
+            if (!$contacts->count()) return null;
+
+            return $contacts[0];
+
+        } catch (Exception $e) {
             // Handle error
         }
     }
