@@ -38,9 +38,7 @@ class RestClient
     {
         $this->auth = $auth;
 
-        $this->client = new GuzzleHttp\Client([
-            'handler' => $handler ? $handler : GuzzleHttp\HandlerStack::create(),
-        ]);
+        $this->setupClient();
     }
 
     /**
@@ -64,6 +62,26 @@ class RestClient
     public function getProductsApiId()
     {
         return $this->productsApiId;
+    }
+
+    /**
+     * Setup Guzzle client with optional provided handler stack.
+     *
+     * @param  GuzzleHttp\HandlerStack|null $stack
+     * @param  array                        $options
+     * @return Client
+     */
+    public function setupClient(GuzzleHttp\HandlerStack $stack = null, $options = [])
+    {
+        $stack = $stack ?: GuzzleHttp\HandlerStack::create();
+
+        $this->client = new GuzzleHttp\Client(array_merge([
+            'handler'  => $stack,
+            'verify' => config('app.env') === 'production',
+            'timeout'  => 900, // 15 minutes
+        ], $options));
+
+        return $this;
     }
 
     /**
