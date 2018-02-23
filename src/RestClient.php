@@ -29,6 +29,20 @@ class RestClient
     protected $productsApiId;
 
     /**
+     * Verify peer SSL
+     *
+     * @var bool
+     */
+    protected $verifyPeer = true;
+
+    /**
+     * Set connection timeout
+     *
+     * @var int
+     */
+    protected $timeout = 900;
+
+    /**
      * Client constructor.
      *
      * @param RestAuthentication $auth
@@ -38,7 +52,7 @@ class RestClient
     {
         $this->auth = $auth;
 
-        $this->setupClient();
+        $this->setupClient($handler);
     }
 
     /**
@@ -65,6 +79,44 @@ class RestClient
     }
 
     /**
+     * @return bool
+     */
+    public function getVerifyPeer()
+    {
+        return $this->verifyPeer;
+    }
+
+    /**
+     * @param bool $verifyPeer
+     * @return RestClient
+     */
+    public function setVerifyPeer($verifyPeer)
+    {
+        $this->verifyPeer = $verifyPeer;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimeout()
+    {
+        return $this->timeout;
+    }
+
+    /**
+     * @param int $timeout
+     * @return RestClient
+     */
+    public function setTimeout($timeout)
+    {
+        $this->timeout = $timeout;
+        return $this;
+    }
+
+
+
+    /**
      * Setup Guzzle client with optional provided handler stack.
      *
      * @param  GuzzleHttp\HandlerStack|null $stack
@@ -77,8 +129,8 @@ class RestClient
 
         $this->client = new GuzzleHttp\Client(array_merge([
             'handler'  => $stack,
-            'verify' => config('app.env') === 'production',
-            'timeout'  => 900, // 15 minutes
+            'verify' => $this->getVerifyPeer(),
+            'timeout'  => $this->getTimeout(),
         ], $options));
 
         return $this;
@@ -109,6 +161,7 @@ class RestClient
                 $params
             );
         } catch (\Exception $e) {
+            var_dump($e->getMessage());exit;
             throw $this->convertException($e);
         }
 
