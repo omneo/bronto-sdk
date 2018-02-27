@@ -4,6 +4,7 @@ namespace Arkade\Bronto;
 
 use GuzzleHttp;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Log;
 use Arkade\Bronto;
 
 class LaravelServiceProvider extends ServiceProvider
@@ -31,17 +32,19 @@ class LaravelServiceProvider extends ServiceProvider
         // Setup the rest client auth.
         $this->app->singleton(Bronto\RestAuthentication::class, function(){
             return (new Bronto\RestAuthentication)
-                ->setAuthUrl(config('services.bronto.authUrl'))
+                ->setAuthUrl(config('services.bronto.auth_url'))
                 ->setEndpoint(config('services.bronto.endpoint'))
-                ->setClientId(config('services.bronto.clientId'))
-                ->setClientSecret(config('services.bronto.clientSecret'));
+                ->setClientId(config('services.bronto.client_id'))
+                ->setClientSecret(config('services.bronto.client_secret'));
         });
 
         // Setup the rest client.
         $this->app->singleton(Bronto\RestClient::class, function () {
             $client = (new Bronto\RestClient(resolve(Bronto\RestAuthentication::class)))
-                ->setProductsApiId(config('services.bronto.productsApiId'))
-                ->setVerifyPeer(config('app.env') === 'production');
+                ->setProductsApiId(config('services.bronto.products_api_id'))
+                ->setLogging(config('services.bronto.logging'))
+                ->setVerifyPeer(config('app.env') === 'production')
+                ->setLogger(Log::getMonolog());
 
             $this->setupRecorder($client);
 
@@ -51,8 +54,8 @@ class LaravelServiceProvider extends ServiceProvider
         // Setup the soap client
         $this->app->singleton(Bronto\SoapClient::class, function () {
             return (new Bronto\SoapClient())
-                ->setToken(config('services.bronto.soapToken'))
-                ->setListId(config('services.bronto.listId'));
+                ->setToken(config('services.bronto.soap_token'))
+                ->setListId(config('services.bronto.list_id'));
         });
     }
 
@@ -65,7 +68,7 @@ class LaravelServiceProvider extends ServiceProvider
     protected function setupRecorder(RestClient $client)
     {
         if (! $this->app->bound('Omneo\Plugins\HttpRecorder\Recorder')) {
-            return $client;
+            return $client->setupClient();
         }
 
         $stack = GuzzleHttp\HandlerStack::create();

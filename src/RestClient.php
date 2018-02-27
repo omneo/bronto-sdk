@@ -29,6 +29,20 @@ class RestClient
     protected $productsApiId;
 
     /**
+     * Enable logging of guzzle requests / responses
+     *
+     * @var bool
+     */
+    protected $logging = false;
+
+    /**
+     * PSR-3 logger
+     *
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
      * Verify peer SSL
      *
      * @var bool
@@ -81,6 +95,42 @@ class RestClient
     /**
      * @return bool
      */
+    public function getLogging()
+    {
+        return $this->logging;
+    }
+
+    /**
+     * @param bool $logging
+     * @return Client
+     */
+    public function setLogging($logging)
+    {
+        $this->logging = $logging;
+        return $this;
+    }
+
+    /**
+     * @return LoggerInterface
+     */
+    public function getLogger()
+    {
+        return $this->logger;
+    }
+
+    /**
+     * @param LoggerInterface $logger
+     * @return Client
+     */
+    public function setLogger($logger)
+    {
+        $this->logger = $logger;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
     public function getVerifyPeer()
     {
         return $this->verifyPeer;
@@ -114,8 +164,6 @@ class RestClient
         return $this;
     }
 
-
-
     /**
      * Setup Guzzle client with optional provided handler stack.
      *
@@ -126,6 +174,8 @@ class RestClient
     public function setupClient(GuzzleHttp\HandlerStack $stack = null, $options = [])
     {
         $stack = $stack ?: GuzzleHttp\HandlerStack::create();
+
+        if($this->logging) $this->bindLoggingMiddleware($stack);
 
         $this->client = new GuzzleHttp\Client(array_merge([
             'handler'  => $stack,
@@ -257,6 +307,20 @@ class RestClient
     public function productService()
     {
         return new Modules\ProductService($this);
+    }
+
+    /**
+     * Bind logging middleware.
+     *
+     * @param  GuzzleHttp\HandlerStack $stack
+     * @return void
+     */
+    protected function bindLoggingMiddleware(GuzzleHttp\HandlerStack $stack)
+    {
+        $stack->push(Middleware::log(
+            $this->logger,
+            new MessageFormatter('{request} - {response}')
+        ));
     }
 
 }
