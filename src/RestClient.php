@@ -5,7 +5,9 @@ namespace Arkade\Bronto;
 use Psr\Http;
 use GuzzleHttp;
 use GuzzleHttp\Middleware;
+use GuzzleHttp\MessageFormatter;
 use Arkade\Bronto;
+use Psr\Log\LoggerInterface;
 
 class RestClient
 {
