@@ -16,29 +16,22 @@ class DeliveryService extends AbstractSoapModule
      */
     public function send(Delivery $delivery)
     {
-        /*
         $deliveryObject = $this->client->getClient()->getDeliveryObject();
 
-        $delivery = $deliveryObject->createRow();
-        $delivery->start      = date('c'); // Today
-        $delivery->type       = \Bronto_Api_Delivery_Row::TYPE_TRANSACTIONAL;
-        $delivery->messageId  = $message->id;
-        $delivery->fromEmail  = 'user@example.com';
-        $delivery->fromName   = 'Example Sender';
-        $delivery->recipients = array(
-            array(
-                'type' => 'contact',
-                'id'   => $contact->id,
-            ),
-        );
+        $deliveryRow = $deliveryObject->createRow();
+        $deliveryRow->start = $delivery->getStart()->toIso8601String();
+        $deliveryRow->type = $delivery->getType();
+        $deliveryRow->messageId = $delivery->getMessageId();
+        $deliveryRow->fromEmail = $delivery->getFromEmail();
+        $deliveryRow->fromName = $delivery->getFromName();
+        $deliveryRow->recipients = json_decode($delivery->getRecipients()->toJson());
 
         // Save
         try {
-            return $delivery->save();
+            return $deliveryRow->save();
         } catch (Exception $e) {
             // Handle error
         }
-        */
     }
 
 }

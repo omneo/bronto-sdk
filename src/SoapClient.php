@@ -96,4 +96,14 @@ class SoapClient
         return new Modules\ContactService($this);
     }
 
+    /**
+     * Delivery service module.
+     *
+     * @return Modules\DeliveryService
+     */
+    public function deliveryService()
+    {
+        return new Modules\DeliveryService($this);
+    }
+
 }
