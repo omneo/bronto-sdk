@@ -26,6 +26,10 @@ class DeliveryService extends AbstractSoapModule
         $deliveryRow->fromName = $delivery->getFromName();
         $deliveryRow->recipients = json_decode($delivery->getRecipients()->toJson());
 
+        $delivery->getFields()->each(function($field) use($deliveryRow){
+            $deliveryRow->setField($field->getName(), $field->getContent(), $field->getType());
+        });
+
         // Save
         try {
             return $deliveryRow->save();
