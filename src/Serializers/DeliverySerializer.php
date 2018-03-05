@@ -17,6 +17,8 @@ class DeliverySerializer
         // trigger the entities jsonSerialize method
         $serialized = json_decode(json_encode($delivery));
 
+        $serialized->start = $delivery->getStart()->toIso8601String();
+
         return json_encode($serialized);
     }
 }

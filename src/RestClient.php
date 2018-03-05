@@ -213,7 +213,6 @@ class RestClient
                 $params
             );
         } catch (\Exception $e) {
-            var_dump($e->getMessage());exit;
             throw $this->convertException($e);
         }
 

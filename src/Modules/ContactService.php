@@ -4,6 +4,7 @@ namespace Arkade\Bronto\Modules;
 
 use Arkade\Bronto\Entities\Contact;
 use Arkade\Bronto\Serializers\ContactSerializer;
+use Arkade\Bronto\Exceptions;
 use Carbon\Carbon;
 
 class ContactService extends AbstractSoapModule
@@ -45,7 +46,8 @@ class ContactService extends AbstractSoapModule
         try {
             return $contactRow->save();
         } catch (Exception $e) {
-            // Handle error
+            throw new Exceptions\UnexpectedException((string)$e->getResponse()->getBody(),
+                $e->getResponse()->getStatusCode());
         }
     }
 
@@ -73,7 +75,8 @@ class ContactService extends AbstractSoapModule
             return $contacts[0];
 
         } catch (Exception $e) {
-            // Handle error
+            throw new Exceptions\UnexpectedException((string)$e->getResponse()->getBody(),
+                $e->getResponse()->getStatusCode());
         }
     }
 
@@ -101,7 +104,8 @@ class ContactService extends AbstractSoapModule
             return $contacts[0];
 
         } catch (Exception $e) {
-            // Handle error
+            throw new Exceptions\UnexpectedException((string)$e->getResponse()->getBody(),
+                $e->getResponse()->getStatusCode());
         }
     }
 
@@ -125,7 +129,8 @@ class ContactService extends AbstractSoapModule
             }
 
         } catch (\Exception $e) {
-            // Handle error
+            throw new Exceptions\UnexpectedException((string)$e->getResponse()->getBody(),
+                $e->getResponse()->getStatusCode());
         }
     }
 
