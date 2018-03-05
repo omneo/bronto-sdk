@@ -41,7 +41,8 @@ class DeliveryService extends AbstractSoapModule
 
         // Save
         try {
-            return $deliveryRow->save();
+            $deliveryRow->save();
+            return $delivery;
         } catch (Exception $e) {
             throw new Exceptions\BrontoException((string)$e->getResponse()->getBody(),
                 $e->getResponse()->getStatusCode());
