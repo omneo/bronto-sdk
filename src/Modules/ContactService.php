@@ -129,7 +129,7 @@ class ContactService extends AbstractSoapModule
             }
 
         } catch (\Exception $e) {
-            throw new Exceptions\UnexpectedException((string)$e->getResponse()->getBody(),
+            throw new Exceptions\BrontoException((string)$e->getResponse()->getBody(),
                 $e->getResponse()->getStatusCode());
         }
     }
