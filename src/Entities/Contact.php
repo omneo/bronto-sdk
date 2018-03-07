@@ -30,6 +30,11 @@ class Contact extends AbstractEntity
     /**
      * @var string
      */
+    protected $status;
+
+    /**
+     * @var string
+     */
     protected $gender;
 
     /**
@@ -440,7 +445,7 @@ class Contact extends AbstractEntity
      * Set collection of attributes.
      *
      * @param  Collection $attributes
-     * @return static
+     * @return Contact
      */
     public function setAttributes(Collection $attributes)
     {
@@ -450,13 +455,29 @@ class Contact extends AbstractEntity
     }
 
     /**
-     * @return Array
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status ?: \Bronto_Api_Contact::STATUS_ONBOARDING;
+    }
+
+    /**
+     * @param string $status
+     * @return Contact
+     */
+    public function setStatus(string $status): Contact
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * @return array
      */
     public function jsonSerialize()
     {
-        $result = get_object_vars($this);
-
-        return $result;
+        return get_object_vars($this);
     }
 
 }

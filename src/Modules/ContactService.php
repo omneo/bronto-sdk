@@ -14,15 +14,54 @@ class ContactService extends AbstractSoapModule
      * Create a contact in Bronto
      *
      * @param Contact $contact
-     * @return \Bronto_Api_Contact_Row
+     * @return Contact
+     * @throws Exceptions\BrontoException
      */
     public function create(Contact $contact)
     {
+        // The mappings for this implementation
+        $fieldMappings = config('bronto.field_mappings');
+        $contactMappings = config('bronto.contact_mappings');
+        $contactRow = $this->buildContactRow($contact);
+
+        // Save
+        try {
+            return (new ContactParser)->parse($contactRow->save(), $fieldMappings, $contactMappings);
+        } catch (\Exception $e) {
+            throw new Exceptions\BrontoException((string)$e->getMessage(),
+                $e->getCode());
+        }
+    }
+
+    /**
+     * @param Contact $contact
+     * @return \Bronto_Api_Rowset
+     * @throws Exceptions\BrontoException
+     */
+    public function update(Contact $contact) {
+        $contactRow = $this->buildContactRow($contact);
+
+        // Update
+        try {
+            return $contactRow->getApiObject()->update($contactRow->getData());
+        } catch (\Exception $e) {
+            throw new Exceptions\BrontoException((string)$e->getMessage(),
+                $e->getCode());
+        }
+
+    }
+
+
+    /**
+     * @param Contact $contact
+     * @return \Bronto_Api_Contact_Row
+     */
+    public function buildContactRow(Contact $contact){
         $contactObject = $this->client->getClient()->getContactObject();
 
         $contactRow = $contactObject->createRow();
         $contactRow->email = $contact->getEmail();
-        $contactRow->status = \Bronto_Api_Contact::STATUS_ONBOARDING;
+        $contactRow->status = $contact->getStatus();
 
         // Add Contact to List
         $contactRow->addToList($this->client->getListId());
@@ -36,25 +75,21 @@ class ContactService extends AbstractSoapModule
 
         // Map the fields to Bronto field ID's and set the fields on the contact row
         foreach ($contactArray as $key => $value){
-            if($key === 'email' || $key === 'id') continue;
+            if($key === 'email' || $key === 'id' || $key === 'status') continue;
             $value = isset($value['date']) ? Carbon::parse($value['date'])->toDateString() : $value;
             $contactRow->setField($fieldMappings[$contactMappings[$key]], (string)$value);
         }
 
-        // Save
-        try {
-            return (new ContactParser)->parse($contactRow->save(), $fieldMappings, $contactMappings);
-        } catch (Exception $e) {
-            throw new Exceptions\UnexpectedException((string)$e->getResponse()->getBody(),
-                $e->getResponse()->getStatusCode());
-        }
+        return $contactRow;
     }
+
 
     /**
      * Find contact by ID
      *
      * @param string ID
      * @return Contact
+     * @throws Exceptions\BrontoException
      */
     public function findById($id)
     {
@@ -76,15 +111,13 @@ class ContactService extends AbstractSoapModule
 
         // Save
         try {
-
             $contacts = $contactObject->readAll($contactsFilter, $fields, false);
 
             if (!$contacts->count()) return null;
 
             return (new ContactParser)->parse($contacts[0], $fieldMappings, $contactMappings);
-
-        } catch (Exception $e) {
-            throw new Exceptions\UnexpectedException((string)$e->getResponse()->getBody(),
+        } catch (\Exception $e) {
+            throw new Exceptions\BrontoException((string)$e->getResponse()->getBody(),
                 $e->getResponse()->getStatusCode());
         }
     }
@@ -114,24 +147,18 @@ class ContactService extends AbstractSoapModule
         }
 
         // Save
-        try {
+        $contacts = $contactObject->readAll($contactsFilter, $fields, false);
 
-            $contacts = $contactObject->readAll($contactsFilter, $fields, false);
+        if (!$contacts->count()) return null;
 
-            if (!$contacts->count()) return null;
-
-            return (new ContactParser)->parse($contacts[0], $fieldMappings, $contactMappings);
-
-        } catch (Exception $e) {
-            throw new Exceptions\UnexpectedException((string)$e->getResponse()->getBody(),
-                $e->getResponse()->getStatusCode());
-        }
+        return (new ContactParser)->parse($contacts[0], $fieldMappings, $contactMappings);
     }
 
     /**
      * Output fields for bronto config file
      *
      * @return void
+     * @throws Exceptions\BrontoException
      */
     public function outputFields()
     {
