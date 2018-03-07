@@ -108,6 +108,87 @@ class Contact extends AbstractEntity
     protected $attributes;
 
     /**
+     * @var string
+     */
+    protected $dimension_recency;
+
+    /**
+     * @var string
+     */
+    protected $dimension_frequency;
+
+    /**
+     * @var string
+     */
+    protected $dimension_join;
+
+    /**
+     * @var string
+     */
+
+    protected $pref_email_promo;
+
+    /**
+     * @var string
+     */
+    protected $pref_email_benefits;
+
+    /**
+     * @var string
+     */
+    protected $pref_email_reminders;
+
+    /**
+     * @var string
+     */
+    protected $pref_email_account;
+
+    /**
+     * @var string
+     */
+    protected $pref_email_feedback;
+
+    /**
+     * @var string
+     */
+    protected $spend_12m;
+
+    /**
+     * @var string
+     */
+    protected $spend_all;
+
+    /**
+     * @var string
+     */
+    protected $spend_atv_12m;
+
+    /**
+     * @var string
+     */
+    protected $spend_atv_all;
+
+    /**
+     * @var string
+     */
+    protected $spend_last_date;
+
+    /**
+     * @var string
+     */
+    protected $spend_first_date;
+
+    /**
+     * @var string
+     */
+    protected $store_favorite;
+
+    /**
+     * @var string
+     */
+    protected $shop_days;
+
+    /**
      * @return string
      */
     public function getId()
@@ -457,7 +538,7 @@ class Contact extends AbstractEntity
     /**
      * @return string
      */
-    public function getStatus(): string
+    public function getStatus()
     {
         return $this->status ?: \Bronto_Api_Contact::STATUS_ONBOARDING;
     }
@@ -466,9 +547,153 @@ class Contact extends AbstractEntity
      * @param string $status
      * @return Contact
      */
-    public function setStatus(string $status): Contact
+    public function setStatus( $status)
     {
         $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDimensionRecency()
+    {
+        return $this->dimension_recency;
+    }
+
+    /**
+     * @param string $dimension_recency
+     * @return Contact
+     */
+    public function setDimensionRecency($dimension_recency)
+    {
+        $this->dimension_recency = $dimension_recency;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDimensionFrequency()
+    {
+        return $this->dimension_frequency;
+    }
+
+    /**
+     * @param string $dimension_frequency
+     * @return Contact
+     */
+    public function setDimensionFrequency($dimension_frequency)
+    {
+        $this->dimension_frequency = $dimension_frequency;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDimensionJoin()
+    {
+        return $this->dimension_join;
+    }
+
+    /**
+     * @param string $dimension_join
+     * @return Contact
+     */
+    public function setDimensionJoin($dimension_join)
+    {
+        $this->dimension_join = $dimension_join;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrefEmailPromo()
+    {
+        return $this->pref_email_promo;
+    }
+
+    /**
+     * @param string $pref_email_promo
+     * @return Contact
+     */
+    public function setPrefEmailPromo($pref_email_promo)
+    {
+        $this->pref_email_promo = $pref_email_promo;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrefEmailBenefits()
+    {
+        return $this->pref_email_benefits;
+    }
+
+    /**
+     * @param string $pref_email_benefits
+     * @return Contact
+     */
+    public function setPrefEmailBenefits($pref_email_benefits)
+    {
+        $this->pref_email_benefits = $pref_email_benefits;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrefEmailReminders()
+    {
+        return $this->pref_email_reminders;
+    }
+
+    /**
+     * @param string $pref_email_reminders
+     * @return Contact
+     */
+    public function setPrefEmailReminders($pref_email_reminders)
+    {
+        $this->pref_email_reminders = $pref_email_reminders;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrefEmailAccount()
+    {
+        return $this->pref_email_account;
+    }
+
+    /**
+     * @param string $pref_email_account
+     * @return Contact
+     */
+    public function setPrefEmailAccount($pref_email_account)
+    {
+        $this->pref_email_account = $pref_email_account;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrefEmailFeedback()
+    {
+        return $this->pref_email_feedback;
+    }
+
+    /**
+     * @param string $pref_email_feedback
+     * @return Contact
+     */
+    public function setPrefEmailFeedback($pref_email_feedback)
+    {
+        $this->pref_email_feedback = $pref_email_feedback;
         return $this;
     }
 
