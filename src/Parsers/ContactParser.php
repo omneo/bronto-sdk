@@ -2,6 +2,7 @@
 
 namespace Arkade\Bronto\Parsers;
 
+use Arkade\Bronto\Entities\Contact;
 use Carbon\Carbon;
 use Arkade\Bronto\Entities;
 use Illuminate\Support\Collection;
