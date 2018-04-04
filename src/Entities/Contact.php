@@ -151,32 +151,32 @@ class Contact extends AbstractEntity
     /**
      * @var string
      */
-    protected $spend_12m;
+    protected $_spend_12m;
 
     /**
      * @var string
      */
-    protected $spend_all;
+    protected $_spend_all;
 
     /**
      * @var string
      */
-    protected $spend_atv_12m;
+    protected $_spend_atv_12m;
 
     /**
      * @var string
      */
-    protected $spend_atv_all;
+    protected $_spend_atv_all;
 
     /**
      * @var string
      */
-    protected $spend_last_date;
+    protected $_spend_last_date;
 
     /**
      * @var string
      */
-    protected $spend_first_date;
+    protected $_spend_first_date;
 
     /**
      * @var string
@@ -186,7 +186,7 @@ class Contact extends AbstractEntity
     /**
      * @var string
      */
-    protected $shop_days;
+    protected $_shop_days;
 
     /**
      * @return string

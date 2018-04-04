@@ -76,7 +76,18 @@ class ContactService extends AbstractSoapModule
         // Map the fields to Bronto field ID's and set the fields on the contact row
         foreach ($contactArray as $key => $value){
             if($key === 'email' || $key === 'id' || $key === 'status') continue;
-            $value = isset($value['date']) ? Carbon::parse($value['date'])->toDateString() : $value;
+
+            if (isset($value['date'])) {
+                $value = $value['date'];
+            }
+
+            try {
+                if ($date = @Carbon::parse($value)) {
+                    $value = $date->format('Y-m-d\Th:m:s.BP');
+                }
+            } catch (\Exception $exception) {
+            }
+
             $contactRow->setField($fieldMappings[$contactMappings[$key]], (string)$value);
         }
 
