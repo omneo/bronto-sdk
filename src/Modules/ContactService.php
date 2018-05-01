@@ -107,7 +107,7 @@ class ContactService extends AbstractSoapModule
         $contactObject = $this->client->getClient()->getContactObject();
 
         $contactsFilter['id'] = [$id];
-        $contactsFilter['listId'] = [$this->client->getListId()];
+        //$contactsFilter['listId'] = [$this->client->getListId()];
 
         // The mappings for this implementation
         $fieldMappings = config('bronto.field_mappings');

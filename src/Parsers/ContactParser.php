@@ -21,7 +21,8 @@ class ContactParser
     {
         $contact = (new Entities\Contact)
             ->setId($payload->id)
-            ->setEmail($payload->email);
+            ->setEmail($payload->email)
+            ->setStatus($payload->status);
 
         $attributes = [];
 
