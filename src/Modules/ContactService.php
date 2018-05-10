@@ -69,6 +69,7 @@ class ContactService extends AbstractSoapModule
         // The mappings for this implementation
         $fieldMappings = config('bronto.field_mappings');
         $contactMappings = config('bronto.contact_mappings');
+        $contactTypes = config('bronto.contact_types');
 
         // Transform the Contact entity to a flattened array
         $contactArray = array_filter(json_decode((new ContactSerializer())->serialize($contact),true));
@@ -77,15 +78,16 @@ class ContactService extends AbstractSoapModule
         foreach ($contactArray as $key => $value){
             if($key === 'email' || $key === 'id' || $key === 'status') continue;
 
-            if (isset($value['date'])) {
-                $value = $value['date'];
-            }
-
-            try {
-                if ($date = @Carbon::parse($value)) {
-                    $value = $date->format('Y-m-d\Th:m:s.BP');
+            if ($contactTypes[$key] === 'date') {
+                if(isset($value['date'])){
+                    $value = $value['date'];
                 }
-            } catch (\Exception $exception) {
+                try {
+                    if ($date = @Carbon::parse($value)) {
+                        $value = $date->format('Y-m-d\Th:m:s.BP');
+                    }
+                } catch (\Exception $exception) {
+                }
             }
 
             $contactRow->setField($fieldMappings[$contactMappings[$key]], (string)$value);
