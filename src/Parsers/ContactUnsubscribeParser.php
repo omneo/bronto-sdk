@@ -19,9 +19,9 @@ class ContactUnsubscribeParser
 
         foreach($payload as $item){
             $contact = (new Entities\Contact)
-                ->setId($payload->id)
-                ->setEmail($payload->email)
-                ->setStatus($payload->status);
+                ->setId($item->id)
+                ->setEmail($item->email)
+                ->setStatus($item->status);
 
             $result->push($contact);
         }
