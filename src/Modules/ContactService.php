@@ -3,10 +3,12 @@
 namespace Arkade\Bronto\Modules;
 
 use Arkade\Bronto\Entities\Contact;
+use Arkade\Bronto\Parsers\ContactUnsubscribeParser;
 use Arkade\Bronto\Serializers\ContactSerializer;
 use Arkade\Bronto\Parsers\ContactParser;
 use Arkade\Bronto\Exceptions;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class ContactService extends AbstractSoapModule
 {
@@ -165,6 +167,54 @@ class ContactService extends AbstractSoapModule
         if (!$contacts->count()) return null;
 
         return (new ContactParser)->parse($contacts[0], $fieldMappings, $contactMappings);
+    }
+
+    /**
+     * Get unsubscribes
+     *
+     * @param Carbon $date
+     * @return Collection
+     */
+    public function getUnsubscribes($date)
+    {
+        $contactObject = $this->client->getClient()->getContactObject();
+
+        $value = $date->format('Y-m-d\Th:m:s.BP');
+
+        $contactsFilter['status'] = ['unsub'];
+        $contactsFilter['modified'] = ['value' => $value, 'operator' => 'After'];
+        $contactsFilter['listId'] = [$this->client->getListId()];
+
+        $fields = [];
+
+        $contacts = $contactObject->readAll($contactsFilter, $fields, false);
+
+        return (new ContactUnsubscribeParser())->parse($contacts);
+
+    }
+
+    /**
+     * Get bounces
+     *
+     * @param Carbon $date
+     * @return Collection
+     */
+    public function getBounces($date)
+    {
+        $contactObject = $this->client->getClient()->getContactObject();
+
+        $value = $date->format('Y-m-d\Th:m:s.BP');
+
+        $contactsFilter['status'] = ['bounce'];
+        $contactsFilter['modified'] = ['value' => $value, 'operator' => 'After'];
+        $contactsFilter['listId'] = [$this->client->getListId()];
+
+        $fields = [];
+
+        $contacts = $contactObject->readAll($contactsFilter, $fields, false);
+
+        return (new ContactUnsubscribeParser())->parse($contacts);
+
     }
 
     /**
