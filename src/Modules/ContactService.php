@@ -173,9 +173,10 @@ class ContactService extends AbstractSoapModule
      * Get unsubscribes
      *
      * @param Carbon $date
+     * @param int $page
      * @return Collection
      */
-    public function getUnsubscribes($date)
+    public function getUnsubscribes($date, $page = 1)
     {
         $contactObject = $this->client->getClient()->getContactObject();
 
@@ -187,7 +188,7 @@ class ContactService extends AbstractSoapModule
 
         $fields = [];
 
-        $contacts = $contactObject->readAll($contactsFilter, $fields, false);
+        $contacts = $contactObject->readAll($contactsFilter, $fields, false, $page);
 
         return (new ContactUnsubscribeParser())->parse($contacts);
 
@@ -197,9 +198,10 @@ class ContactService extends AbstractSoapModule
      * Get bounces
      *
      * @param Carbon $date
+     * @param int $page
      * @return Collection
      */
-    public function getBounces($date)
+    public function getBounces($date, $page = 1)
     {
         $contactObject = $this->client->getClient()->getContactObject();
 
@@ -211,7 +213,7 @@ class ContactService extends AbstractSoapModule
 
         $fields = [];
 
-        $contacts = $contactObject->readAll($contactsFilter, $fields, false);
+        $contacts = $contactObject->readAll($contactsFilter, $fields, false, $page);
 
         return (new ContactUnsubscribeParser())->parse($contacts);
 
