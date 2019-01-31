@@ -1,10 +1,10 @@
 <?php
 
-namespace Arkade\Bronto;
+namespace Omneo\Bronto;
 
 use Psr\Http;
 use GuzzleHttp;
-use Arkade\Bronto;
+use Omneo\Bronto;
 
 class RestClient
 {

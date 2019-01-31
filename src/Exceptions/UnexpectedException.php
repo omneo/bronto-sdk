@@ -1,6 +1,6 @@
 <?php
 
-namespace Arkade\Responsys\Exceptions;
+namespace Omneo\Responsys\Exceptions;
 
 use Exception;
 

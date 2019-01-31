@@ -1,16 +1,16 @@
 {
-    "name": "arkade/bronto-sdk",
+    "name": "omneo/bronto-sdk",
     "description": "PHP SDK for the Bronto API",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Arkade\\Bronto\\": "src/"
+            "Omneo\\Bronto\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Arkade\\Bronto\\": "tests/"
+            "Omneo\\Bronto\\": "tests/"
         }
     },
     "require": {
@@ -22,12 +22,6 @@
         "phpunit/phpunit": "^6.1",
         "mockery/mockery": "^0.9.9",
         "bronto/bronto-api-php-client": "dev-master"
-    },
-    "repositories": {
-        "support": {
-            "type": "git",
-            "url": "git@github.com:arkade-digital/support.git"
-        }
     },
     "config": {
         "sort-packages": true

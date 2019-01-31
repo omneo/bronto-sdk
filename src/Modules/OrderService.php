@@ -1,8 +1,8 @@
 <?php
 
-namespace Arkade\Bronto\Modules;
+namespace Omneo\Bronto\Modules;
 
-use Arkade\Bronto;
+use Omneo\Bronto;
 
 class OrderService extends AbstractRestModule
 {
