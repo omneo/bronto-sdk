@@ -2,7 +2,7 @@
 
 namespace Omneo\Bronto\Entities;
 
-class LineItem
+class LineItem extends AbstractEntity
 {
     /**
      * @var string

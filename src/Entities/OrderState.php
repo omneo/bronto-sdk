@@ -2,9 +2,7 @@
 
 namespace Omneo\Bronto\Entities;
 
-use Carbon\Carbon;
-
-class OrderState
+class OrderState extends AbstractEntity
 {
     /**
      * @var boolean

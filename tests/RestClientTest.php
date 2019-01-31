@@ -9,7 +9,7 @@ use GuzzleHttp\Handler\MockHandler;
 use Arkade\Bronto\RestAuthentication;
 use PHPUnit\Framework\TestCase;
 
-class ClientTest extends TestCase
+class RestClientTest extends TestCase
 {
     public function testRequest()
     {
@@ -49,7 +49,7 @@ class ClientTest extends TestCase
         $client = new RestClient($auth, $stack);
 
         // Let's test!
-        $client->request('GET', '/some-endpoint',
+        $client->request('GET', 'some-endpoint',
             ['query' => ['foo' => 'bar']]);
 
         // Check the correct outgoing call was made

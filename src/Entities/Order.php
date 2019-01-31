@@ -3,8 +3,9 @@
 namespace Omneo\Bronto\Entities;
 
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
-class Order
+class Order extends AbstractEntity
 {
     /**
      * @var float
@@ -180,7 +181,7 @@ class Order
      */
     public function getLineItems()
     {
-        return $this->lineItems;
+        return $this->lineItems ?: $this->lineItems = new Collection;
     }
 
     /**
@@ -248,7 +249,7 @@ class Order
     }
 
     /**
-     * @return Carbon
+     * @return Carbon|null
      */
     public function getShippingDate()
     {
@@ -259,7 +260,7 @@ class Order
      * @param Carbon $shippingDate
      * @return Order
      */
-    public function setShippingDate($shippingDate)
+    public function setShippingDate(Carbon $shippingDate = null)
     {
         $this->shippingDate = $shippingDate;
         return $this;
@@ -428,7 +429,7 @@ class Order
     }
 
     /**
-     * @return string
+     * @return Carbon|null
      */
     public function getOrderDate()
     {
@@ -436,10 +437,10 @@ class Order
     }
 
     /**
-     * @param string $orderDate
+     * @param Carbon $orderDate
      * @return Order
      */
-    public function setOrderDate($orderDate)
+    public function setOrderDate(Carbon $orderDate = null)
     {
         $this->orderDate = $orderDate;
         return $this;
@@ -475,7 +476,7 @@ class Order
      * @param OrderState $states
      * @return Order
      */
-    public function setStates(Bronto\OrderState $states)
+    public function setStates(OrderState $states)
     {
         $this->states = $states;
         return $this;
@@ -533,6 +534,17 @@ class Order
     {
         $this->updatedDate = $updatedDate;
         return $this;
+    }
+
+    /**
+     * @return Array
+     */
+    public function jsonSerialize()
+    {
+        $result = get_object_vars($this);
+        if(!is_null($result['orderDate'])) $result['orderDate'] = $result['orderDate']->toDateString();
+        if(!is_null($result['shippingDate'])) $result['shippingDate'] = $result['shippingDate']->toDateString();
+        return $result;
     }
 
 }
