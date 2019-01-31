@@ -1,12 +1,12 @@
 <?php
 
-namespace Arkade\Bronto\Modules;
+namespace Omneo\Bronto\Modules;
 
-use Arkade\Bronto\Entities\Contact;
-use Arkade\Bronto\Parsers\ContactUnsubscribeParser;
-use Arkade\Bronto\Serializers\ContactSerializer;
-use Arkade\Bronto\Parsers\ContactParser;
-use Arkade\Bronto\Exceptions;
+use Omneo\Bronto\Entities\Contact;
+use Omneo\Bronto\Parsers\ContactUnsubscribeParser;
+use Omneo\Bronto\Serializers\ContactSerializer;
+use Omneo\Bronto\Parsers\ContactParser;
+use Omneo\Bronto\Exceptions;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 

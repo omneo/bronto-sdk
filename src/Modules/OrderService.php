@@ -1,10 +1,10 @@
 <?php
 
-namespace Arkade\Bronto\Modules;
+namespace Omneo\Bronto\Modules;
 
-use Arkade\Bronto\Entities\Order;
-use Arkade\Bronto\Parsers\OrderParser;
-use Arkade\Bronto\Serializers\OrderSerializer;
+use Omneo\Bronto\Entities\Order;
+use Omneo\Bronto\Parsers\OrderParser;
+use Omneo\Bronto\Serializers\OrderSerializer;
 use Illuminate\Support\Collection;
 
 class OrderService extends AbstractRestModule

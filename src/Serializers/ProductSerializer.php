@@ -1,8 +1,8 @@
 <?php
 
-namespace Arkade\Bronto\Serializers;
+namespace Omneo\Bronto\Serializers;
 
-use Arkade\Bronto\Entities;
+use Omneo\Bronto\Entities;
 use Carbon\Carbon;
 
 class ProductSerializer

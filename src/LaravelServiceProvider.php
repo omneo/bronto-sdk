@@ -5,7 +5,7 @@ namespace Omneo\Bronto;
 use GuzzleHttp;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Log;
-use Arkade\Bronto;
+use Omneo\Bronto;
 
 class LaravelServiceProvider extends ServiceProvider
 {

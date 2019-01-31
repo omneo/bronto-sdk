@@ -1,12 +1,12 @@
 <?php
 
-namespace Arkade\Bronto;
+namespace Omneo\Bronto;
 
 use Psr\Http;
 use GuzzleHttp;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\MessageFormatter;
-use Arkade\Bronto;
+use Omneo\Bronto;
 use Psr\Log\LoggerInterface;
 
 class RestClient

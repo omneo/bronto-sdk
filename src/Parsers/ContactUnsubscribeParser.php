@@ -1,8 +1,8 @@
 <?php
 
-namespace Arkade\Bronto\Parsers;
+namespace Omneo\Bronto\Parsers;
 
-use Arkade\Bronto\Entities;
+use Omneo\Bronto\Entities;
 use Illuminate\Support\Collection;
 
 class ContactUnsubscribeParser

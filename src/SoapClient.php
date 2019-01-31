@@ -1,6 +1,6 @@
 <?php
 
-namespace Arkade\Bronto;
+namespace Omneo\Bronto;
 
 use Bronto_Api;
 

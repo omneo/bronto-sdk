@@ -1,6 +1,6 @@
 <?php
 
-namespace Arkade\Bronto\Entities;
+namespace Omneo\Bronto\Entities;
 
 use Carbon\Carbon;
 

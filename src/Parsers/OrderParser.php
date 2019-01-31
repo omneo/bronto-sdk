@@ -1,9 +1,9 @@
 <?php
 
-namespace Arkade\Bronto\Parsers;
+namespace Omneo\Bronto\Parsers;
 
 use Carbon\Carbon;
-use Arkade\Bronto\Entities;
+use Omneo\Bronto\Entities;
 
 class OrderParser
 {

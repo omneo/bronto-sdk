@@ -1,10 +1,10 @@
 <?php
 
-namespace Arkade\Bronto\Modules;
+namespace Omneo\Bronto\Modules;
 
-use Arkade\Bronto\Entities\Delivery;
-use Arkade\Bronto\Serializers\DeliverySerializer;
-use Arkade\Bronto\Exceptions;
+use Omneo\Bronto\Entities\Delivery;
+use Omneo\Bronto\Serializers\DeliverySerializer;
+use Omneo\Bronto\Exceptions;
 use Carbon\Carbon;
 
 class DeliveryService extends AbstractSoapModule

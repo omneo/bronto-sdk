@@ -1,10 +1,10 @@
 <?php
 
-namespace Arkade\Bronto\Modules;
+namespace Omneo\Bronto\Modules;
 
-use Arkade\Bronto\Entities\Product;
-use Arkade\Bronto\Parsers\ProductParser;
-use Arkade\Bronto\Serializers\ProductSerializer;
+use Omneo\Bronto\Entities\Product;
+use Omneo\Bronto\Parsers\ProductParser;
+use Omneo\Bronto\Serializers\ProductSerializer;
 use Illuminate\Support\Collection;
 use League\Csv\Writer;
 

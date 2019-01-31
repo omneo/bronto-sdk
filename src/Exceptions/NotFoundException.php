@@ -1,6 +1,6 @@
 <?php
 
-namespace Arkade\Bronto\Exceptions;
+namespace Omneo\Bronto\Exceptions;
 
 use Exception;
 
