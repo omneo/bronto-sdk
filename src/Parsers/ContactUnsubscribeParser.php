@@ -21,6 +21,7 @@ class ContactUnsubscribeParser
             $contact = (new Entities\Contact)
                 ->setId($item->id)
                 ->setEmail($item->email)
+                ->setMobileNumber($item->mobileNumber)
                 ->setStatus($item->status);
 
             $result->push($contact);

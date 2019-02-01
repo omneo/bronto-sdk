@@ -64,6 +64,7 @@ class ContactService extends AbstractSoapModule
         $contactRow = $contactObject->createRow();
         $contactRow->email = $contact->getEmail();
         $contactRow->status = $contact->getStatus();
+        $contactRow->mobileNumber = $contact->getMobileNumber();
 
         // Add Contact to List
         $contactRow->addToList($this->client->getListId());
@@ -78,7 +79,7 @@ class ContactService extends AbstractSoapModule
 
         // Map the fields to Bronto field ID's and set the fields on the contact row
         foreach ($contactArray as $key => $value){
-            if($key === 'email' || $key === 'id' || $key === 'status') continue;
+            if($key === 'email' || $key === 'id' || $key === 'status' || $key === 'mobileNumber') continue;
 
             if ($contactTypes[$key] === 'date') {
                 if(isset($value['date'])){
