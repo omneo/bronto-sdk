@@ -30,6 +30,11 @@ class Contact extends AbstractEntity
     /**
      * @var string
      */
+    protected $mobileNumber;
+
+    /**
+     * @var string
+     */
     protected $status;
 
     /**
@@ -257,6 +262,24 @@ class Contact extends AbstractEntity
     public function setEmail($email)
     {
         $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMobileNumber()
+    {
+        return $this->mobileNumber;
+    }
+
+    /**
+     * @param string $mobile
+     * @return Contact
+     */
+    public function setMobileNumber($mobileNumber)
+    {
+        $this->mobileNumber = $mobileNumber;
         return $this;
     }
 
