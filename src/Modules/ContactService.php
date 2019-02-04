@@ -170,13 +170,62 @@ class ContactService extends AbstractSoapModule
         return (new ContactParser)->parse($contacts[0], $fieldMappings, $contactMappings);
     }
 
-    public function getSubscribes($date, $page = 1)
+    /**
+     * Get contacts updated since
+     *
+     * @param Carbon $date
+     * @param int $page
+     * @return Collection
+     */
+    public function getContactsUpdatedSince($date, $page = 1)
     {
         $contactObject = $this->client->getClient()->getContactObject();
 
         $value = $date->format('Y-m-d\Th:m:s.BP');
 
-        $contactsFilter['status'] = ['active'];
+        $contactsFilter['modified'] = ['value' => $value, 'operator' => 'After'];
+        $contactsFilter['listId'] = [$this->client->getListId()];
+
+        // The mappings for this implementation
+        $fieldMappings = config('bronto.field_mappings');
+        $contactMappings = config('bronto.contact_mappings');
+
+        $fields = [];
+        foreach($contactMappings as $mapping){
+            if(array_key_exists($mapping, $fieldMappings)){
+                $fields[] = $fieldMappings[$mapping];
+            }
+        }
+
+        $contacts = $contactObject->readAll($contactsFilter, $fields, false, $page);
+
+        $parseContacts = collect([]);
+
+        foreach($contacts as $contact) {
+            $parseContacts->push(
+                (new ContactParser)->parse($contact, $fieldMappings, $contactMappings)
+            );
+        }
+
+        return $parseContacts;
+
+    }
+
+    /**
+     * Get contacts by status
+     *
+     * @param string $status
+     * @param Carbon $date
+     * @param int $page
+     * @return Collection
+     */
+    public function getContactsByStatus($status, $date, $page = 1)
+    {
+        $contactObject = $this->client->getClient()->getContactObject();
+
+        $value = $date->format('Y-m-d\Th:m:s.BP');
+
+        $contactsFilter['status'] = [$status];
         $contactsFilter['created'] = ['value' => $value, 'operator' => 'After'];
         $contactsFilter['listId'] = [$this->client->getListId()];
 
