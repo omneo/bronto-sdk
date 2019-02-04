@@ -170,13 +170,13 @@ class ContactService extends AbstractSoapModule
         return (new ContactParser)->parse($contacts[0], $fieldMappings, $contactMappings);
     }
 
-    public function getSubscribes($date, $page = 1)
+    public function getContactsByStatus($status, $date, $page = 1)
     {
         $contactObject = $this->client->getClient()->getContactObject();
 
         $value = $date->format('Y-m-d\Th:m:s.BP');
 
-        $contactsFilter['status'] = ['active'];
+        $contactsFilter['status'] = [$status];
         $contactsFilter['created'] = ['value' => $value, 'operator' => 'After'];
         $contactsFilter['listId'] = [$this->client->getListId()];
 
