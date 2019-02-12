@@ -305,6 +305,34 @@ class ContactService extends AbstractSoapModule
     }
 
     /**
+     * Get fields
+     *
+     * @return Collection
+     * @throws Exceptions\BrontoException
+     */
+    public function getFields()
+    {
+        $fieldObject = $this->client->getClient()->getFieldObject();
+
+        try {
+
+            $fields = $fieldObject->readAll();
+            $result = collect([]);
+
+            foreach($fields as $field){
+                $field = $field->toArray();
+                $result->push($field);
+            }
+
+            return $result;
+
+        } catch (\Exception $e) {
+            throw new Exceptions\BrontoException((string)$e->getResponse()->getBody(),
+                $e->getResponse()->getStatusCode());
+        }
+    }
+
+    /**
      * Output fields for bronto config file
      *
      * @return void
@@ -314,7 +342,6 @@ class ContactService extends AbstractSoapModule
     {
         $fieldObject = $this->client->getClient()->getFieldObject();
 
-        // Save
         try {
 
             $fields = $fieldObject->readAll();
