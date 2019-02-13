@@ -13,11 +13,10 @@ class ContactParser
      * Parse the given array to a Contact entity.
      *
      * @param  array $payload
-     * @param  array $fieldMappings
-     * @param  array $contactMappings
+     * @param  Collection $mappings
      * @return Contact
      */
-    public function parse($payload, $fieldMappings, $contactMappings)
+    public function parse($payload, $mappings)
     {
         $contact = (new Entities\Contact)
             ->setId($payload->id)
@@ -28,22 +27,11 @@ class ContactParser
         $attributes = [];
 
         foreach($payload->fields as $field){
-            if(!empty($field['content']) && in_array($field['fieldId'], $fieldMappings)){
-                $fieldMapping = array_search($field['fieldId'], $fieldMappings);
-                if(in_array($fieldMapping, $contactMappings)) {
-                    $contactMapping = array_search($fieldMapping, $contactMappings);
-                    $methodName = 'set'. ucfirst($contactMapping);
-                    if(method_exists($contact, $methodName)){
-                        if($methodName === 'setBirthday' || $methodName === 'setCreationDate'){
-                            $contact->{$methodName}(Carbon::parse($field['content']));
-                        }else{
-                            $contact->{$methodName}($field['content']);
-                        }
-                    }else{
-                        $attributes[$contactMapping] = $field['content'];
-                    }
+            $mappings->each(function($mapping) use(&$attributes, $field){
+                if($field['fieldId'] === $mapping['bronto_id']){
+                    $attributes[$mapping['bronto_name']] = $field['content'];
                 }
-            }
+            });
         }
 
         $contact->setAttributes(new Collection($attributes));

@@ -2,6 +2,7 @@
 
 namespace Omneo\Bronto\Modules;
 
+use Omneo\Bronto\SoapClient;
 use Omneo\Bronto\Entities\Contact;
 use Omneo\Bronto\Parsers\ContactUnsubscribeParser;
 use Omneo\Bronto\Serializers\ContactSerializer;
@@ -20,12 +21,12 @@ class ContactService extends AbstractSoapModule
     /**
      * constructor.
      *
-     * @param Bronto\SoapClient|null $client
+     * @param SoapClient|null $client
      * @param Collection $mappings
      */
-    public function __construct(Bronto\SoapClient $client, Collection $mappings)
+    public function __construct(SoapClient $client, Collection $mappings)
     {
-        $this->mapping = $mappings;
+        $this->mappings = $mappings;
 
         parent::__construct($client);
     }
@@ -39,14 +40,11 @@ class ContactService extends AbstractSoapModule
      */
     public function create(Contact $contact)
     {
-        // The mappings for this implementation
-        $fieldMappings = config('bronto.field_mappings');
-        $contactMappings = config('bronto.contact_mappings');
         $contactRow = $this->buildContactRow($contact);
 
         // Save
         try {
-            return (new ContactParser)->parse($contactRow->save(), $fieldMappings, $contactMappings);
+            return (new ContactParser)->parse($contactRow->save(), $this->mappings);
         } catch (\Exception $e) {
             throw new Exceptions\BrontoException((string)$e->getMessage(),
                 $e->getCode());
@@ -68,9 +66,7 @@ class ContactService extends AbstractSoapModule
             throw new Exceptions\BrontoException((string)$e->getMessage(),
                 $e->getCode());
         }
-
     }
-
 
     /**
      * @param Contact $contact
@@ -87,18 +83,17 @@ class ContactService extends AbstractSoapModule
         // Add Contact to List
         $contactRow->addToList($this->client->getListId());
 
-        // The mappings for this implementation
-        $fieldMappings = config('bronto.field_mappings');
-        $contactMappings = config('bronto.contact_mappings');
-        $contactTypes = config('bronto.contact_types');
-
         // Transform the Contact entity to a flattened array
         $contactArray = array_filter(json_decode((new ContactSerializer())->serialize($contact),true));
 
         // Map the fields to Bronto field ID's and set the fields on the contact row
         foreach ($contactArray as $key => $value){
             if($key === 'email' || $key === 'id' || $key === 'status' || $key === 'mobileNumber') continue;
-            $contactRow->setField($fieldMappings[$contactMappings[$key]], (string)$value);
+            $this->mappings->each(function($mapping) use($key, $value, &$contactRow){
+                if($key === $mapping['bronto_name']){
+                    $contactRow->setField($mapping['bronto_id'], (string)$value);
+                }
+            });
         }
 
         return $contactRow;
@@ -119,24 +114,17 @@ class ContactService extends AbstractSoapModule
         $contactsFilter['id'] = [$id];
         //$contactsFilter['listId'] = [$this->client->getListId()];
 
-        // The mappings for this implementation
-        $fieldMappings = config('bronto.field_mappings');
-        $contactMappings = config('bronto.contact_mappings');
-
         $fields = [];
-        foreach($contactMappings as $mapping){
-            if(array_key_exists($mapping, $fieldMappings)){
-                $fields[] = $fieldMappings[$mapping];
-            }
-        }
+        $this->mappings->each(function($mapping) use(&$fields){
+            $fields[] = $mapping['bronto_id'];
+        });
 
-        // Save
         try {
             $contacts = $contactObject->readAll($contactsFilter, $fields, false);
 
             if (!$contacts->count()) return null;
 
-            return (new ContactParser)->parse($contacts[0], $fieldMappings, $contactMappings);
+            return (new ContactParser)->parse($contacts[0], $this->mappings);
         } catch (\Exception $e) {
             throw new Exceptions\BrontoException((string)$e->getResponse()->getBody(),
                 $e->getResponse()->getStatusCode());
@@ -156,23 +144,16 @@ class ContactService extends AbstractSoapModule
         $contactsFilter['email'] = ['value' => $email, 'operator' => 'EqualTo'];
         $contactsFilter['listId'] = [$this->client->getListId()];
 
-        // The mappings for this implementation
-        $fieldMappings = config('bronto.field_mappings');
-        $contactMappings = config('bronto.contact_mappings');
-
         $fields = [];
-        foreach($contactMappings as $mapping){
-            if(array_key_exists($mapping, $fieldMappings)){
-                $fields[] = $fieldMappings[$mapping];
-            }
-        }
+        $this->mappings->each(function($mapping) use(&$fields){
+            $fields[] = $mapping['bronto_id'];
+        });
 
-        // Save
         $contacts = $contactObject->readAll($contactsFilter, $fields, false);
 
         if (!$contacts->count()) return null;
 
-        return (new ContactParser)->parse($contacts[0], $fieldMappings, $contactMappings);
+        return (new ContactParser)->parse($contacts[0], $this->mappings);
     }
 
     /**
@@ -191,16 +172,10 @@ class ContactService extends AbstractSoapModule
         $contactsFilter['modified'] = ['value' => $value, 'operator' => 'After'];
         $contactsFilter['listId'] = [$this->client->getListId()];
 
-        // The mappings for this implementation
-        $fieldMappings = config('bronto.field_mappings');
-        $contactMappings = config('bronto.contact_mappings');
-
         $fields = [];
-        foreach($contactMappings as $mapping){
-            if(array_key_exists($mapping, $fieldMappings)){
-                $fields[] = $fieldMappings[$mapping];
-            }
-        }
+        $this->mappings->each(function($mapping) use(&$fields){
+            $fields[] = $mapping['bronto_id'];
+        });
 
         $contacts = $contactObject->readAll($contactsFilter, $fields, false, $page);
 
@@ -208,7 +183,7 @@ class ContactService extends AbstractSoapModule
 
         foreach($contacts as $contact) {
             $parseContacts->push(
-                (new ContactParser)->parse($contact, $fieldMappings, $contactMappings)
+                (new ContactParser)->parse($contact, $this->mappings)
             );
         }
 
@@ -234,16 +209,10 @@ class ContactService extends AbstractSoapModule
         $contactsFilter['created'] = ['value' => $value, 'operator' => 'After'];
         $contactsFilter['listId'] = [$this->client->getListId()];
 
-        // The mappings for this implementation
-        $fieldMappings = config('bronto.field_mappings');
-        $contactMappings = config('bronto.contact_mappings');
-
         $fields = [];
-        foreach($contactMappings as $mapping){
-            if(array_key_exists($mapping, $fieldMappings)){
-                $fields[] = $fieldMappings[$mapping];
-            }
-        }
+        $this->mappings->each(function($mapping) use(&$fields){
+            $fields[] = $mapping['bronto_id'];
+        });
 
         $contacts = $contactObject->readAll($contactsFilter, $fields, false, $page);
 
@@ -251,7 +220,7 @@ class ContactService extends AbstractSoapModule
 
         foreach($contacts as $contact) {
             $parseContacts->push(
-                (new ContactParser)->parse($contact, $fieldMappings, $contactMappings)
+                (new ContactParser)->parse($contact, $this->mappings)
             );
         }
 
