@@ -13,6 +13,24 @@ use Illuminate\Support\Collection;
 class ContactService extends AbstractSoapModule
 {
     /**
+     * @var Collection
+     */
+    protected $mappings;
+
+    /**
+     * constructor.
+     *
+     * @param Bronto\SoapClient|null $client
+     * @param Collection $mappings
+     */
+    public function __construct(Bronto\SoapClient $client, Collection $mappings)
+    {
+        $this->mapping = $mappings;
+
+        parent::__construct($client);
+    }
+
+    /**
      * Create a contact in Bronto
      *
      * @param Contact $contact
