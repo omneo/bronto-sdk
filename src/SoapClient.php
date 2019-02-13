@@ -3,6 +3,7 @@
 namespace Omneo\Bronto;
 
 use Bronto_Api;
+use Illuminate\Support\Collection;
 
 class SoapClient
 {
@@ -20,6 +21,11 @@ class SoapClient
      * @var string
      */
     protected $listId;
+
+    /**
+     * @var Collection
+     */
+    protected $contactMappings;
 
     /**
      * Client constructor.
@@ -87,13 +93,31 @@ class SoapClient
     }
 
     /**
+     * @return Collection
+     */
+    public function getContactMappings()
+    {
+        return $this->contactMappings;
+    }
+
+    /**
+     * @param Collection $contactMappings
+     * @return SoapClient
+     */
+    public function setContactMappings($contactMappings)
+    {
+        $this->contactMappings = $contactMappings;
+        return $this;
+    }
+
+    /**
      * Contact service module.
      *
      * @return Modules\ContactService
      */
     public function contactService()
     {
-        return new Modules\ContactService($this);
+        return new Modules\ContactService($this, $this->contactMappings);
     }
 
     /**
