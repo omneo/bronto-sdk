@@ -99,7 +99,6 @@ class ContactService extends AbstractSoapModule
         return $contactRow;
     }
 
-
     /**
      * Find contact by ID
      *
