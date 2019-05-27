@@ -19,9 +19,11 @@ class ContactSerializer
 
         // flatten attributes
         if(isset($serialized->attributes)){
-            $vars = get_object_vars($serialized->attributes);
-            foreach ($vars as $key => $value){
-                $serialized->$key = $value;
+            foreach ($serialized->attributes as $attribute){
+                $vars = get_object_vars($attribute);
+                foreach($vars as $key=>$value){
+                    $serialized->$key = $value;
+                }
             }
             unset($serialized->attributes);
         }
