@@ -63,6 +63,7 @@ class ContactService extends AbstractSoapModule
         try {
             return $contactRow->getApiObject()->update($contactRow->getData());
         } catch (\Exception $e) {
+            dd($e);
             throw new Exceptions\BrontoException((string)$e->getMessage(),
                 $e->getCode());
         }
@@ -76,6 +77,7 @@ class ContactService extends AbstractSoapModule
         $contactObject = $this->client->getClient()->getContactObject();
 
         $contactRow = $contactObject->createRow();
+        $contactRow->id = $contact->getId();
         $contactRow->email = $contact->getEmail();
         $contactRow->status = $contact->getStatus();
         $contactRow->mobileNumber = $contact->getMobileNumber();
