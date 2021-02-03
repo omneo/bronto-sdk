@@ -242,7 +242,6 @@ class ContactService extends AbstractSoapModule
 
         $contactsFilter['status'] = ['unsub'];
         $contactsFilter['modified'] = ['value' => $value, 'operator' => 'After'];
-        $contactsFilter['listId'] = [$this->client->getListId()];
 
         $fields = [];
 
@@ -267,7 +266,6 @@ class ContactService extends AbstractSoapModule
 
         $contactsFilter['status'] = ['bounce'];
         $contactsFilter['modified'] = ['value' => $value, 'operator' => 'After'];
-        $contactsFilter['listId'] = [$this->client->getListId()];
 
         $fields = [];
 
